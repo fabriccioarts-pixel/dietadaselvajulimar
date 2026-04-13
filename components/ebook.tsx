@@ -198,9 +198,13 @@ export function Ebook() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", damping: 12 }}
-              className="text-7xl mb-6"
+              className="mb-6 flex justify-center"
             >
-              🦁
+              <img 
+                src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
+                alt="Dieta da Selva Logo" 
+                className="w-24 h-24"
+              />
             </motion.div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">DIETA DA SELVA</h1>
             <p className="text-xl opacity-90">O Protocolo de Nutrição Ancestral Personalizado</p>
@@ -264,8 +268,12 @@ export function Ebook() {
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
-          <div className="absolute inset-0 flex items-center justify-center text-3xl">
-            🦁
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img 
+              src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
+              alt="Logo" 
+              className="w-12 h-12"
+            />
           </div>
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Processando seus dados...</h2>
@@ -301,7 +309,13 @@ export function Ebook() {
       {/* Header */}
       <header className="bg-gradient-to-r from-amber-600 via-orange-500 to-amber-600 text-white py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="text-6xl mb-4">🦁</div>
+          <div className="mb-4">
+            <img 
+              src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
+              alt="Logo" 
+              className="w-28 h-28 mx-auto"
+            />
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-2">DIETA DA SELVA</h1>
           <div className="hidden print:block text-2xl font-black mt-4 border-t border-white/30 pt-4 uppercase tracking-widest">
             Protocolo para: {userData?.name}
@@ -1651,7 +1665,13 @@ export function Ebook() {
           {/* Footer */}
           <footer className="mt-12 bg-gradient-to-r from-amber-600 via-orange-500 to-amber-600 text-white py-8 px-4 rounded-xl pdf-footer">
             <div className="text-center">
-              <div className="text-4xl mb-4">🦁</div>
+              <div className="mb-4 flex justify-center">
+                <img 
+                  src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
+                  alt="Logo" 
+                  className="w-20 h-20 brightness-0 invert"
+                />
+              </div>
               <h2 className="text-2xl font-bold mb-2">DIETA DA SELVA</h2>
               <p className="opacity-90 mb-4">Protocolo de Ganho de Peso Saudável</p>
               <p className="text-sm opacity-80">Alimentação Ancestral para Resultados Modernos</p>
