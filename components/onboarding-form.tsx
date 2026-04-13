@@ -44,9 +44,9 @@ export function OnboardingForm({ onComplete }: OnboardingFormProps) {
 
   return (
     <div className="max-w-md mx-auto h-full flex flex-col justify-center py-12 px-6">
-      <div className="mb-8 overflow-hidden rounded-full h-2 bg-amber-100">
+      <div className="mb-8 overflow-hidden rounded-full h-2 bg-emerald-100">
         <motion.div
-          className="h-full bg-amber-600"
+          className="h-full bg-emerald-600"
           initial={{ width: "0%" }}
           animate={{ width: `${(step / totalSteps) * 100}%` }}
         />
@@ -64,8 +64,8 @@ export function OnboardingForm({ onComplete }: OnboardingFormProps) {
               className="space-y-6"
             >
               <div className="space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
-                  <User className="text-amber-600 w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4">
+                  <User className="text-emerald-600 w-6 h-6" />
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900">Olá! Qual seu nome?</h2>
                 <p className="text-gray-500">Para começarmos sua jornada na Dieta da Selva.</p>
@@ -93,8 +93,8 @@ export function OnboardingForm({ onComplete }: OnboardingFormProps) {
               className="space-y-6"
             >
               <div className="space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
-                  <Activity className="text-amber-600 w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4">
+                  <Activity className="text-emerald-600 w-6 h-6" />
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900">Dados Básicos</h2>
                 <p className="text-gray-500">Isso ajuda a calcular seu metabolismo basal.</p>
@@ -141,8 +141,8 @@ export function OnboardingForm({ onComplete }: OnboardingFormProps) {
               className="space-y-6"
             >
               <div className="space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
-                  <Ruler className="text-amber-600 w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4">
+                  <Ruler className="text-emerald-600 w-6 h-6" />
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900">Suas Medidas</h2>
                 <p className="text-gray-500">Quanto mais preciso, melhor o plano.</p>
@@ -185,8 +185,8 @@ export function OnboardingForm({ onComplete }: OnboardingFormProps) {
               className="space-y-6"
             >
               <div className="space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
-                  <TargetIcon className="text-amber-600 w-6 h-6" />
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4">
+                  <TargetIcon className="text-emerald-600 w-6 h-6" />
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900">Objetivo & Estilo</h2>
                 <p className="text-gray-500">Defina sua meta e atividade física.</p>
@@ -247,7 +247,7 @@ export function OnboardingForm({ onComplete }: OnboardingFormProps) {
           size="lg"
           onClick={handleNext}
           disabled={step === 1 ? !data.name : (step === 3 ? (!data.weight || !data.height) : (step === 2 ? !data.age : false))}
-          className="bg-amber-600 hover:bg-amber-700 text-white px-8"
+          className="bg-emerald-600 hover:bg-emerald-700 text-white px-8"
         >
           {step === totalSteps ? "Gerar Minha Dieta" : "Próximo"} <ChevronRight className="ml-2 w-4 h-4" />
         </Button>
