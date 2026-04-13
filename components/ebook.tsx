@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
-import { ChevronDown, ChevronUp, BookOpen, Download, Loader2, Play } from "lucide-react"
+import { ChevronDown, ChevronUp, BookOpen, Download, Loader2, Play, Check } from "lucide-react"
 import { jsPDF } from "jspdf"
 import html2canvas from "html2canvas"
 import { motion, AnimatePresence } from "framer-motion"
@@ -13,11 +13,11 @@ import { Button } from "./ui/button"
 
 const sections = [
   { id: "intro", title: "📖 Introdução", icon: "📖" },
+  { id: "diagnostico", title: "🩺 Diagnóstico Corporal", icon: "🩺", category: "fundamentos" },
   { id: "compras", title: "🛒 Lista de Compras Ancestral", icon: "🛒", category: "fundamentos" },
   { id: "principios", title: "💪 Princípios Fundamentais", icon: "💪" },
   { id: "macros", title: "📊 Distribuição de Macronutrientes", icon: "📊" },
-  { id: "combinacoes", title: "🔧 Como Fazer Combinações", icon: "🔧" },
-  { id: "melhores", title: "🍽️ Melhores Combinações", icon: "🍽️" },
+  { id: "guia-montagem", title: "🍽️ Guia de Montagem", icon: "🍽️" },
   { id: "cardapio", title: "📅 Cardápio Mensal", icon: "📅" },
   { id: "smoothies", title: "🥤 Smoothies de Alta Caloria", icon: "🥤" },
   { id: "suplementacao", title: "💊 Suplementação", icon: "💊" },
@@ -157,7 +157,7 @@ function prepareElementForPdf(element: HTMLElement) {
 }
 
 export function Ebook() {
-  const [appState, setAppState] = useState<"welcome" | "onboarding" | "loading" | "ebook">("welcome")
+  const [appState, setAppState] = useState<"welcome" | "onboarding" | "loading" | "success" | "ebook">("welcome")
   const [userData, setUserData] = useState<UserData | null>(null)
   const [dietPlan, setDietPlan] = useState<DietPlan | null>(null)
   const [activeTab, setActiveTab] = useState("fundamentos")
@@ -171,7 +171,7 @@ export function Ebook() {
     setTimeout(() => {
       const plan = calculateDiet(data)
       setDietPlan(plan)
-      setAppState("ebook")
+      setAppState("success")
     }, 2000)
   }
 
@@ -189,9 +189,9 @@ export function Ebook() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl w-full bg-white rounded-3xl shadow-none overflow-hidden"
+          className="max-w-2xl w-full bg-white rounded-xl shadow-none overflow-hidden"
         >
-          <div className="bg-gradient-to-r from-emerald-600 to-green-500 p-12 text-center text-white">
+          <div className="bg-emerald-700 p-12 text-center text-white">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -216,15 +216,15 @@ export function Ebook() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-slate-50 rounded-2xl">
+              <div className="p-4 bg-slate-50 rounded-lg">
                 <div className="text-2xl mb-1">📊</div>
                 <div className="font-bold text-emerald-800 text-sm">Cálculo Preciso</div>
               </div>
-              <div className="p-4 bg-slate-50 rounded-2xl">
+              <div className="p-4 bg-slate-50 rounded-lg">
                 <div className="text-2xl mb-1">🥩</div>
                 <div className="font-bold text-emerald-800 text-sm">Plano de Atalaia</div>
               </div>
-              <div className="p-4 bg-slate-50 rounded-2xl">
+              <div className="p-4 bg-slate-50 rounded-lg">
                 <div className="text-2xl mb-1">📄</div>
                 <div className="font-bold text-emerald-800 text-sm">PDF Completo</div>
               </div>
@@ -233,11 +233,11 @@ export function Ebook() {
             <Button
               size="lg"
               onClick={() => setAppState("onboarding")}
-              className="w-full h-16 text-xl bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl shadow-none transition-all hover:scale-[1.02]"
+              className="w-full h-16 text-xl bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-none transition-all hover:scale-[1.02]"
             >
               Começar Agora <Play className="ml-2 fill-current" size={20} />
             </Button>
-            <p className="text-xs text-gray-400">Desenvolvido por Julimar Meneses - Nutricionista</p>
+            <p className="text-xs text-gray-400">Desenvolvido por Julimar Meneses - Nutricionista | @dr.julimar.meneses</p>
           </div>
         </motion.div>
       </div>
@@ -303,7 +303,75 @@ export function Ebook() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
+    <div className="min-h-screen bg-slate-50/50 overflow-x-hidden font-sans">
+      {/* SUCCESS RESUMO VIEW */}
+      {appState === "success" && (
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-10 relative overflow-hidden print:hidden">
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden relative z-20 border border-emerald-100"
+          >
+            <div className="p-8 md:p-12 text-center">
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="flex justify-center mb-6"
+              >
+                <div className="bg-emerald-100 p-4 rounded-full">
+                  <Check className="w-10 h-10 text-emerald-600" />
+                </div>
+              </motion.div>
+
+              <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight uppercase">
+                Protocolo Pronto!
+              </h2>
+              <p className="text-gray-500 text-lg md:text-xl max-w-xl mx-auto mb-10">
+                Analisamos seus dados e geramos suas diretrizes ancestrais personalizadas.
+              </p>
+
+              {/* Quick Summary Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+                 <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-2">Energia Diária</p>
+                    <p className="text-3xl font-black text-emerald-950">{dietPlan?.calories} <span className="text-xs font-normal">kcal</span></p>
+                    <p className="text-[10px] text-emerald-600/60 mt-2 italic">Meta recomendada</p>
+                 </div>
+                 <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-2">Proteína</p>
+                    <p className="text-3xl font-black text-emerald-950">{dietPlan?.macros.protein}g</p>
+                    <p className="text-[10px] text-emerald-600/60 mt-2 italic">Aporte essencial</p>
+                 </div>
+                 <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-2">Metabolismo</p>
+                    <p className="text-3xl font-black text-emerald-950">{dietPlan?.bmr} <span className="text-xs font-normal">kcal</span></p>
+                    <p className="text-[10px] text-emerald-600/60 mt-2 italic">Taxa Basal (TMB)</p>
+                 </div>
+              </div>
+
+              <div className="flex justify-center">
+                 <Button
+                    size="lg"
+                    onClick={handleDownload}
+                    className="h-16 px-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-lg font-black uppercase tracking-wider flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-lg"
+                 >
+                    <Download className="w-5 h-5 transition-transform group-hover:animate-bounce" />
+                    Baixar Protocolo PDF
+                 </Button>
+              </div>
+
+              <p className="mt-10 text-xs text-gray-400 font-medium">
+                * O manual completo contém cardápio mensal, lista de compras e orientações de treino.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* FULL EBOOK CONTENT (MANUAL) */}
+      <div className={`${appState === "success" ? "hidden print:block" : (appState === "ebook" ? "block" : "hidden")}`}>
       {/* Header */}
       <header className="relative overflow-hidden print:h-[297mm] print:w-[210mm] print:m-0 print:rounded-none bg-emerald-950 min-h-[500px] flex flex-col justify-center">
         {/* Background Image for Web and Print */}
@@ -313,7 +381,7 @@ export function Ebook() {
             alt="Background" 
             className="w-full h-full object-cover opacity-60 print:opacity-100"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/80 to-emerald-950/90" />
+          <div className="absolute inset-0 bg-emerald-950/90" />
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-20 w-full py-16 px-6">
@@ -371,8 +439,8 @@ export function Ebook() {
             </div>
           </div>
 
-          <div className="mt-20 text-sm opacity-60 font-black tracking-[0.4em] uppercase hidden print:block border-t border-white/20 pt-10 text-white">
-            Nutricionista Julimar Meneses • Dieta da Selva
+          <div className="mt-20 text-[10px] opacity-30 font-normal tracking-[0.4em] uppercase hidden print:block border-t border-white/10 pt-10 text-white">
+            Nutricionista Julimar Meneses • @dr.julimar.meneses • Dieta da Selva
           </div>
         </div>
 
@@ -430,7 +498,7 @@ export function Ebook() {
               @media print {
                 @page {
                   size: A4;
-                  margin: 0;
+                  margin: 25mm 15mm 20mm 15mm;
                 }
                 body {
                   background: white !important;
@@ -438,17 +506,20 @@ export function Ebook() {
                   print-color-adjust: exact !important;
                   margin: 0 !important;
                   padding: 0 !important;
+                  font-family: var(--font-inter), sans-serif !important;
                 }
                 .print\\:hidden {
                   display: none !important;
                 }
                 header {
-                  height: 297mm !important;
-                  width: 210mm !important;
+                  min-height: calc(297mm - 50mm) !important;
+                  width: 100% !important;
                   margin: 0 !important;
                   padding: 0 !important;
                   position: relative !important;
-                  display: block !important;
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
                   background-color: #064e3b !important;
                   -webkit-print-color-adjust: exact !important;
                   print-color-adjust: exact !important;
@@ -473,31 +544,29 @@ export function Ebook() {
                 }
                 /* Content margins and vertical centering for pages after cover */
                 main, .max-w-4xl {
-                   width: 210mm !important;
+                   width: 100% !important;
                    padding: 0 !important;
                    margin: 0 auto !important;
                 }
                 
-                /* Each tab section should try to center its content */
+                /* Sections will now inherit margins from @page */
                 .max-w-4xl > div:not(.relative) {
-                  min-height: 297mm !important;
+                  width: 100% !important;
                   display: flex !important;
                   flex-direction: column !important;
-                  justify-content: center !important;
-                  padding: 20mm 15mm !important;
+                  justify-content: flex-start !important;
+                  padding: 0 !important;
                 }
 
                 header .max-w-4xl {
                    padding: 0 !important;
                    margin: 0 !important;
-                   min-height: 297mm !important;
-                   height: 297mm !important;
+                   width: 100% !important;
+                   max-width: none !important;
                    display: flex !important;
                    flex-direction: column !important;
                    justify-content: center !important;
                    align-items: center !important;
-                   width: 210mm !important;
-                   max-width: none !important;
                 }
                 
                 header .max-w-4xl > div {
@@ -522,21 +591,46 @@ export function Ebook() {
                   box-shadow: none !important;
                   margin-bottom: 2rem !important;
                 }
-                /* Force all tab containers to show during print */
-                .hidden {
+                /* Force visibility on all printable elements without breaking layouts */
+                * {
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
+                }
+                
+                /* Reset animations and opacity for print without forcing display mode */
+                div, section, p, h1, h2, h3, h4, span, img {
+                  opacity: 1 !important;
+                  visibility: visible !important;
+                  animation: none !important;
+                  transition: none !important;
+                }
+
+                /* Ensure hidden containers (tabs) become visible for printing */
+                .hidden.print\:block {
                   display: block !important;
                   visibility: visible !important;
                   opacity: 1 !important;
                 }
+
+                [data-section-content], [data-active-tab] {
+                  display: block !important;
+                  opacity: 1 !important;
+                  visibility: visible !important;
+                }
+                
+                /* Specifically hide the success view during print */
+                .print\:hidden {
+                  display: none !important;
+                }
               }
             `}</style>
             {/* --- FUNDAMENTOS --- */}
-            <div className={activeTab === "fundamentos" ? "block space-y-4 animate-in fade-in duration-500" : "hidden"}>
+            <div className={activeTab === "fundamentos" ? "block space-y-4 animate-in fade-in duration-500" : "hidden print:block print:space-y-4"}>
               <div className="mb-6 flex items-center justify-between print:hidden">
                 <h2 className="text-2xl font-black text-gray-800 uppercase flex items-center gap-3">
                   🦁 FUNDAMENTOS
                 </h2>
-                <div className="h-1 flex-1 ml-4 bg-gradient-to-r from-emerald-200 to-transparent rounded-full" />
+                <div className="h-1 flex-1 ml-4 bg-emerald-200 rounded-full" />
               </div>
               {/* Introdução */}
               <Section
@@ -549,7 +643,7 @@ export function Ebook() {
                   <div>
                     <h3 className="text-lg font-bold text-emerald-800 mb-3">O que é este protocolo?</h3>
                     <p className="text-gray-700 mb-4">
-                      Este manual foi desenvolvido para pessoas que desejam ganhar peso de forma saudável utilizando os
+                      Este manual foi desenvolvido para pessoas que desejam {userData?.goal === "muscle-gain" ? "ganhar peso e massa muscular" : userData?.goal === "lose-weight" ? "perder gordura mantendo a massa magra" : "manter o peso com máxima vitalidade"} de forma saudável utilizando os
                       princípios da Dieta da Selva: alimentos ancestrais, densos em nutrientes e de alta qualidade
                       biológica.
                     </p>
@@ -558,39 +652,47 @@ export function Ebook() {
                       data-pdf-essential="false"
                     >
                       <p className="text-emerald-800">
-                        💡 <strong>DICA INICIAL:</strong> Ganhar peso saudável não significa comer "qualquer coisa". A
-                        qualidade dos alimentos determina se você ganha músculo ou apenas gordura. Escolha sempre
+                        💡 <strong>DICA INICIAL:</strong> {userData?.goal === "lose-weight" ? "Perder peso" : "Ganhar peso"} saudável não significa comer "qualquer coisa". A
+                        qualidade dos alimentos determina se você {userData?.goal === "lose-weight" ? "preserva seus músculos enquanto queima gordura" : "ganha músculo ou apenas gordura"}. Escolha sempre
                         alimentos de verdade, não produtos industrializados.
                       </p>
                     </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-lg font-bold text-emerald-800 mb-3">Para quem é este protocolo?</h3>
-                    <ul className="list-disc list-inside space-y-2 text-gray-700">
-                      <li>Pessoas naturalmente magras (ectomorfos)</li>
-                      <li>Quem busca aumentar massa muscular</li>
-                      <li>Recuperação pós-doença</li>
-                      <li>Atletas em fase de volume</li>
-                      <li>Pessoas com metabolismo acelerado</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-emerald-800 mb-3">O que você vai alcançar:</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {[
-                        "Ganho de 2-4kg por mês de massa muscular magra",
-                        "Energia aumentada para treinos e atividades diárias",
-                        "Força progressiva em todos os exercícios",
-                        "Saúde metabólica otimizada",
-                        "Corpo funcional e atlético",
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-2 bg-green-50 p-3 rounded-lg">
-                          <span className="text-green-600">✅</span>
-                          <span className="text-green-800">{item}</span>
-                        </div>
-                      ))}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="text-lg font-bold text-emerald-800 mb-3">O que você vai alcançar:</h3>
+                      <div className="grid grid-cols-1 gap-2">
+                        {[
+                          userData?.goal === "muscle-gain" ? "Ganho de 2-4kg por mês de massa muscular" : userData?.goal === "lose-weight" ? "Perda sustentável de 2-4kg de gordura por mês" : "Manutenção de um corpo atlético e saudável",
+                          "Energia aumentada para treinos e atividades diárias",
+                          "Força progressiva em todos os exercícios",
+                          "Saúde metabólica otimizada",
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-green-50 p-2 rounded-lg border border-green-100">
+                            <span className="text-green-600 text-sm">✅</span>
+                            <span className="text-green-800 text-sm font-medium">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-emerald-800 mb-3">Para quem é:</h3>
+                      <ul className="grid grid-cols-1 gap-2 text-sm text-gray-700">
+                        {userData?.goal === "lose-weight" ? (
+                          <>
+                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-emerald-500 rounded-full" /> Pessoas que buscam secar mantendo massa</li>
+                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-emerald-500 rounded-full" /> Quem deseja melhorar a definição muscular</li>
+                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-emerald-500 rounded-full" /> Atletas em fase de cutting (definição)</li>
+                          </>
+                        ) : (
+                          <>
+                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-emerald-500 rounded-full" /> Pessoas naturalmente magras (ectomorfos)</li>
+                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-emerald-500 rounded-full" /> Quem busca aumentar massa muscular</li>
+                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-emerald-500 rounded-full" /> Pessoas com metabolismo acelerado</li>
+                          </>
+                        )}
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -696,6 +798,293 @@ export function Ebook() {
                 </div>
               </Section>
 
+              {/* Diagnóstico Corporal */}
+              <Section
+                id="diagnostico"
+                title="🩺 DIAGNÓSTICO CORPORAL PERSONALIZADO"
+                expanded={expandedSection === "diagnostico"}
+                onToggle={() => toggleSection("diagnostico")}
+              >
+                <div className="space-y-6">
+                  <div className="flex flex-col md:flex-row items-center gap-8 bg-white border border-gray-100 p-6 rounded-2xl relative overflow-hidden">
+                    <div className="z-10 flex-1 space-y-4">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="bg-white p-4 rounded-xl border border-emerald-100">
+                             <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Taxa Metabólica Basal (TMB)</p>
+                             <p className="text-2xl font-black text-emerald-800">{dietPlan?.bmr} <span className="text-sm font-normal">kcal/dia</span></p>
+                             <p className="text-[10px] text-gray-400 mt-1 italic">*Energia gasta em repouso absoluto.</p>
+                          </div>
+                          <div className="bg-white p-4 rounded-xl border border-emerald-100">
+                             <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">Gasto Energético Diário (TDEE)</p>
+                             <p className="text-2xl font-black text-emerald-800">{dietPlan?.tdee} <span className="text-sm font-normal">kcal/dia</span></p>
+                             <p className="text-[10px] text-gray-400 mt-1 italic">*Energia total considerando suas atividades.</p>
+                          </div>
+                       </div>
+
+                       <div className="p-5 bg-emerald-900 text-white rounded-2xl relative">
+                          <div className="flex justify-between items-center mb-6">
+                             <div>
+                                <p className="text-[10px] uppercase font-bold opacity-70 tracking-widest">Diagnóstico IMC</p>
+                                <p className="text-xl font-black">
+                                   {(() => {
+                                      const bmi = userData ? userData.weight / Math.pow(userData.height / 100, 2) : 0;
+                                      if (bmi < 18.5) return "Abaixo do Peso";
+                                      if (bmi < 25) return "Peso Ideal";
+                                      if (bmi < 30) return "Sobrepeso";
+                                      return "Obesidade";
+                                   })()}
+                                </p>
+                             </div>
+                             <div className="text-right">
+                                <p className="text-[10px] uppercase font-bold opacity-70">Índice Atual</p>
+                                <p className="text-2xl font-black">{(userData ? userData.weight / Math.pow(userData.height / 100, 2) : 0).toFixed(1)}</p>
+                             </div>
+                          </div>
+
+                          <div className="relative pt-4 pb-2">
+                             {/* Marker Pointer */}
+                             <div 
+                                className="absolute top-0 transition-all duration-1000 ease-out"
+                                style={{ 
+                                   left: (() => {
+                                      const bmi = userData ? userData.weight / Math.pow(userData.height / 100, 2) : 0;
+                                      if (bmi < 18.5) return `${(bmi / 18.5) * 20}%`;
+                                      if (bmi < 25) return `${20 + ((bmi - 18.5) / 6.5) * 30}%`;
+                                      if (bmi < 30) return `${50 + ((bmi - 25) / 5) * 25}%`;
+                                      return `${Math.min(75 + ((bmi - 30) / 10) * 25, 98)}%`;
+                                   })(),
+                                   transform: 'translateX(-50%)'
+                                }}
+                             >
+                                <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-white"></div>
+                             </div>
+
+                             <div className="h-4 w-full bg-white/10 rounded-full flex overflow-hidden border border-white/10">
+                                <div className="h-full bg-yellow-400 opacity-90" style={{ width: "20%" }} title="Abaixo" />
+                                <div className="h-full bg-green-400 border-x border-emerald-900" style={{ width: "30%" }} title="Ideal" />
+                                <div className="h-full bg-orange-400" style={{ width: "25%" }} title="Sobrepeso" />
+                                <div className="h-full bg-red-400" style={{ width: "25%" }} title="Obesidade" />
+                             </div>
+                             
+                             {/* Labels */}
+                             <div className="flex justify-between mt-2 text-[8px] font-bold uppercase tracking-tighter opacity-60">
+                                <span className="w-[20%] text-center">Abaixo</span>
+                                <span className="w-[30%] text-center text-green-300">Ideal</span>
+                                <span className="w-[25%] text-center">Sobrepeso</span>
+                                <span className="w-[25%] text-center">Obesidade</span>
+                             </div>
+                          </div>
+                          <p className="text-[9px] mt-4 opacity-40 italic text-center leading-tight">Referência: Organização Mundial da Saúde (OMS)</p>
+                       </div>
+                    </div>
+
+                    <div className="md:w-56 flex flex-col items-center justify-center text-center">
+                       <img 
+                         src="/human-body-frontal.jpg" 
+                         alt="Body Analysis" 
+                         className="h-64 w-auto"
+                       />
+                       <p className="text-[10px] text-emerald-800 font-bold mt-2">Morfologia Analisada</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                     <div className="bg-white p-4 rounded-xl border border-emerald-100">
+                        <h5 className="font-bold text-emerald-900 mb-2 underline">O que é a TMB?</h5>
+                        <p className="text-gray-700 leading-relaxed">
+                           É a quantidade mínima de energia que seu organismo precisa para realizar as funções vitais (respiração, batimentos, digestão) enquanto você dorme ou descansa. Conhecê-la é o primeiro passo para o controle calórico.
+                        </p>
+                     </div>
+                     <div className="bg-white p-4 rounded-xl border border-emerald-100">
+                        <h5 className="font-bold text-emerald-900 mb-2 underline">Por que o IMC é uma referência?</h5>
+                        <p className="text-gray-700 leading-relaxed">
+                           O IMC nos dá uma visão estatística rápida de saúde. No entanto, lembre-se: ele não distingue massa muscular de gordura. Um atleta pode ter IMC de "sobrepeso" sendo extremamente saudável!
+                        </p>
+                     </div>
+                  </div>
+                </div>
+              </Section>
+
+              {/* Cardápio Mensal - Movido para cá para fluxo do PDF */}
+              <Section
+                id="cardapio"
+                title="📅 CARDÁPIO MENSAL COMPLETO"
+                expanded={expandedSection === "cardapio"}
+                onToggle={() => toggleSection("cardapio")}
+              >
+                <div className="space-y-6">
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-bold text-blue-800 mb-2">Como usar este cardápio:</h4>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• Siga os horários sugeridos ou adapte à sua rotina</li>
+                      <li>• As quantidades são referências para pessoa de 70kg</li>
+                      <li>• Ajuste as porções conforme seu peso e necessidades</li>
+                      <li>• Mantenha a urina clara ao longo do dia</li>
+                    </ul>
+                  </div>
+
+                  {/* Segunda-feira */}
+                  <div className="bg-white rounded-xl shadow-none overflow-hidden">
+                    <div className="bg-emerald-600 text-white p-4">
+                      <h4 className="text-xl font-bold">🗓️ SEGUNDA-FEIRA - Exemplo Completo</h4>
+                    </div>
+                    <div className="p-4 space-y-4">
+                      <DayMeal
+                        time="07:00"
+                        name="Café da Manhã (Base Ancestral)"
+                        calories={Math.round(dietPlan?.calories! * 0.20)}
+                        items={[
+                          `${Math.round(userData?.weight! * 0.07)} Ovos inteiros (mexidos na manteiga ou banha)`,
+                          "1 Abacate médio (150-200g)",
+                          "1 porção de Batata-doce ou Inhame (150g)",
+                          "1 Banana-prata grande"
+                        ]}
+                        macros={{ 
+                          protein: Math.round(dietPlan?.macros.protein! * 0.20), 
+                          fat: Math.round(dietPlan?.macros.fats! * 0.25), 
+                          carbs: Math.round(dietPlan?.macros.carbs! * 0.15) 
+                        }}
+                      />
+
+                      <DayMeal
+                        time="10:00"
+                        name="Colação (Lanche Matinal)"
+                        calories={Math.round(dietPlan?.calories! * 0.10)}
+                        items={[
+                          "30g de Coco seco ralado (sem açúcar)",
+                          "1 porção de Frutas cítricas ou Uvas",
+                          "1 punhado de Castanhas-do-pará (2-3 unidades)"
+                        ]}
+                        macros={{ 
+                          protein: Math.round(dietPlan?.macros.protein! * 0.05), 
+                          fat: Math.round(dietPlan?.macros.fats! * 0.15), 
+                          carbs: Math.round(dietPlan?.macros.carbs! * 0.08) 
+                        }}
+                      />
+
+                      <DayMeal
+                        time="13:00"
+                        name="Almoço (Força da Selva)"
+                        calories={Math.round(dietPlan?.calories! * 0.25)}
+                        items={[
+                          "200g-250g de Carne Bovina (Acém, Fraldinha ou Músculo)",
+                          "250g-300g de Mandioca ou Batata-inglesa",
+                          "Salada de Cenoura e Beterraba com Azeite extra-virgem (2 col. sopa)",
+                          "Sobremesa: 1 Manga ou 1 fatia grande de Mamão"
+                        ]}
+                        macros={{ 
+                          protein: Math.round(dietPlan?.macros.protein! * 0.30), 
+                          fat: Math.round(dietPlan?.macros.fats! * 0.20), 
+                          carbs: Math.round(dietPlan?.macros.carbs! * 0.25) 
+                        }}
+                      />
+
+                      <DayMeal
+                        time="16:30"
+                        name="Lanche da Tarde (Energia)"
+                        calories={Math.round(dietPlan?.calories! * 0.15)}
+                        items={[
+                          "Smoothie: 2 Bananas + 200ml Leite de coco + 1 col. sopa Mel cru",
+                          "2 colheres de sopa de Pasta de Coco ou Cacau"
+                        ]}
+                        macros={{ 
+                          protein: Math.round(dietPlan?.macros.protein! * 0.10), 
+                          fat: Math.round(dietPlan?.macros.fats! * 0.15), 
+                          carbs: Math.round(dietPlan?.macros.carbs! * 0.20) 
+                        }}
+                      />
+
+                      <DayMeal
+                        time="19:30"
+                        name="Jantar (Recuperação)"
+                        calories={Math.round(dietPlan?.calories! * 0.20)}
+                        items={[
+                          "200g de Coxa/Sobrecoxa de Frango com pele ou Peixe gordo",
+                          "2 Bananas-da-terra assadas ou grelhadas",
+                          "Legumes variados (cozidos na manteiga)",
+                          "1 fatia de Abacaxi de sobremesa"
+                        ]}
+                        macros={{ 
+                          protein: Math.round(dietPlan?.macros.protein! * 0.25), 
+                          fat: Math.round(dietPlan?.macros.fats! * 0.15), 
+                          carbs: Math.round(dietPlan?.macros.carbs! * 0.22) 
+                        }}
+                      />
+
+                      <DayMeal
+                        time="22:00"
+                        name="Lanche da Noite (Ceia Ancestral)"
+                        calories={Math.round(dietPlan?.calories! * 0.10)}
+                        items={[
+                          "2 Ovos cozidos ou 50g de Coco seco",
+                          "1 Banana com Mel e Canela",
+                          "Chá de Camomila ou Erva-doce (sem açúcar)"
+                        ]}
+                        macros={{ 
+                          protein: Math.round(dietPlan?.macros.protein! * 0.10), 
+                          fat: Math.round(dietPlan?.macros.fats! * 0.10), 
+                          carbs: Math.round(dietPlan?.macros.carbs! * 0.10) 
+                        }}
+                      />
+
+                      <div className="bg-green-100 p-4 rounded-lg text-center">
+                        <p className="text-green-800 font-bold text-lg">✅ Meta Diária Personalizada: ~{dietPlan?.calories} kcal</p>
+                        <p className="text-green-700 font-medium">
+                          {userData?.goal === "lose-weight" ? `(Foco em Déficit: -400 kcal/dia aplicado)` : `(Foco em Superávit: +400 kcal/dia aplicado)`}
+                        </p>
+                        <p className="text-green-700 font-medium mt-1">
+                          Proteína: {dietPlan?.macros.protein}g | 
+                          Gorduras: {dietPlan?.macros.fats}g | 
+                          Carboidratos: {dietPlan?.macros.carbs}g
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Rotação */}
+                  <div className="bg-slate-50 p-6 rounded-xl">
+                    <h4 className="text-xl font-bold text-purple-800 mb-4">📝 Rotação Semanal</h4>
+                    <p className="text-gray-700 mb-4">
+                      Este cardápio apresenta 1 dia completo como exemplo. Para as semanas seguintes, você deve rotacionar
+                      as fontes:
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-bold text-emerald-700">🥩 Proteínas</h5>
+                        <p className="text-sm text-gray-600">
+                          Alterne entre acém, fraldinha, músculo, coxa de frango, fígado, coração, moela
+                        </p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-bold text-emerald-700">🍠 Carboidratos</h5>
+                        <p className="text-sm text-gray-600">
+                          Alterne entre batata-doce, mandioca, banana-da-terra, inhame, batata inglesa
+                        </p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-bold text-emerald-700">🍌 Frutas</h5>
+                        <p className="text-sm text-gray-600">
+                          Alterne entre bananas, mangas, mamão, uvas, abacaxi, melancia
+                        </p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h5 className="font-bold text-emerald-700">🥑 Gorduras</h5>
+                        <p className="text-sm text-gray-600">
+                          Alterne entre abacate, óleo de coco, azeite, manteiga, banha
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
+                    <p className="text-emerald-800">
+                      📅 <strong>MEAL PREP:</strong> Separe 2-3 horas no domingo para preparar refeições da semana.
+                      Cozinhe 3kg de frango, 2kg de batata-doce, 2kg de mandioca. Armazene em potes de vidro na geladeira!
+                    </p>
+                  </div>
+                </div>
+              </Section>
+
               {/* Princípios Fundamentais */}
               <Section
                 id="principios"
@@ -704,14 +1093,18 @@ export function Ebook() {
                 onToggle={() => toggleSection("principios")}
               >
                 <div className="space-y-8">
-                  {/* 1. Superávit Calórico */}
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl">
-                    <h3 className="text-lg font-bold text-emerald-800 mb-3">1. Superávit Calórico Inteligente</h3>
+                  {/* 1. Ajuste Calórico Inteligente */}
+                  <div className="bg-emerald-50 p-6 rounded-xl">
+                    <h3 className="text-lg font-bold text-emerald-800 mb-3">
+                      1. {userData?.goal === "lose-weight" ? "Déficit" : "Superávit"} Calórico Inteligente
+                    </h3>
                     <p className="text-gray-700 mb-4">Não se trata de comer qualquer coisa.</p>
                     <ul className="space-y-2 text-gray-700">
-                      <li>• Superávit de 300-500 calorias por dia</li>
+                      <li>
+                        • {userData?.goal === "lose-weight" ? "Déficit" : "Superávit"} de {userData?.goal === "maintenance" ? "0" : "400"} calorias por dia em relação ao seu gasto total (TDEE)
+                      </li>
                       <li>• Prioridade: alimentos densos e nutritivos</li>
-                      <li>• Evitar comida industrializada (mesmo que tenha calorias)</li>
+                      <li>• Evitar comida industrializada (mesmo que tenha {userData?.goal === "lose-weight" ? "poucas" : "muitas"} calorias)</li>
                     </ul>
                     <div
                       className="mt-4 bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg"
@@ -726,7 +1119,7 @@ export function Ebook() {
                   </div>
 
                   {/* 2. Proteína */}
-                  <div className="bg-gradient-to-r from-red-50 to-green-50 p-6 rounded-xl">
+                  <div className="bg-emerald-50 p-6 rounded-xl">
                     <h3 className="text-lg font-bold text-emerald-800 mb-3">2. Proteína Abundante</h3>
                     <p className="text-gray-600 mb-4">Sua Meta Personalizada: <strong>{dietPlan?.macros.protein}g</strong> de proteína por dia</p>
 
@@ -761,7 +1154,7 @@ export function Ebook() {
                   </div>
 
                   {/* 3. Gorduras */}
-                  <div className="bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-xl">
+                  <div className="bg-purple-50 p-6 rounded-xl">
                     <h3 className="text-lg font-bold text-emerald-800 mb-3">3. Gorduras Saudáveis em Abundância</h3>
                     <p className="text-gray-700 mb-4">As gorduras são suas aliadas - 9 calorias por grama!</p>
 
@@ -778,7 +1171,7 @@ export function Ebook() {
                   </div>
 
                   {/* 4. Carboidratos */}
-                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl">
+                  <div className="bg-purple-50 p-6 rounded-xl">
                     <h3 className="text-lg font-bold text-emerald-800 mb-3">4. Carboidratos de Qualidade</h3>
                     <p className="text-gray-700 mb-4">Combustível para treinar e recuperar</p>
 
@@ -801,33 +1194,29 @@ export function Ebook() {
                   </div>
 
                   {/* 5. Frequência */}
-                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl">
+                  <div className="bg-blue-50 p-6 rounded-xl">
                     <h3 className="text-lg font-bold text-emerald-800 mb-3">5. Frequência de Refeições</h3>
-                    <p className="text-gray-700 mb-4">2-4 refeições ao dia (conforme sua preferência e rotina)</p>
+                    <p className="text-gray-700 mb-4">2-6 refeições ao dia (conforme sua preferência e rotina)</p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                       <div className="bg-white p-4 rounded-lg shadow">
-                        <h5 className="font-bold text-emerald-700 mb-2">📋 MODELO 1: 4 Refeições</h5>
+                                                <h5 className="font-bold text-emerald-700 mb-2">📋 MODELO 1: 6 Refeições ({userData?.goal === "muscle-gain" ? "Ideal p/ Massa" : "Ideal p/ Saciedade"})</h5>
                         <ul className="text-sm text-gray-600 space-y-1">
-                          <li>7h: Café da manhã (~700-800 cal)</li>
-                          <li>12h: Almoço (~800-900 cal)</li>
-                          <li>16h: Lanche/Smoothie (~500-700 cal)</li>
-                          <li>20h: Jantar (~800-900 cal)</li>
+                          <li>7h: Café da manhã (~20%)</li>
+                          <li>10h: Colação (~10%)</li>
+                          <li>13h: Almoço (~25%)</li>
+                          <li>16h: Lanche da tarde (~15%)</li>
+                          <li>19h: Jantar (~20%)</li>
+                          <li>22h: Lanche da noite (~10%)</li>
                         </ul>
                       </div>
                       <div className="bg-white p-4 rounded-lg shadow">
-                        <h5 className="font-bold text-emerald-700 mb-2">📋 MODELO 2: 3 Refeições</h5>
+                        <h5 className="font-bold text-emerald-700 mb-2">📋 MODELO 2: 4 Refeições (Prático)</h5>
                         <ul className="text-sm text-gray-600 space-y-1">
-                          <li>8h: Café reforçado (~900-1000 cal)</li>
-                          <li>13h: Almoço completo (~1000-1200 cal)</li>
-                          <li>19h: Jantar completo (~900-1000 cal)</li>
-                        </ul>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg shadow">
-                        <h5 className="font-bold text-emerald-700 mb-2">📋 MODELO 3: 2 Refeições</h5>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          <li>12h: Primeira refeição (~1400-1600 cal)</li>
-                          <li>19h: Segunda refeição (~1400-1600 cal)</li>
+                          <li>7h: Café da manhã (~25%)</li>
+                          <li>12h: Almoço (~30%)</li>
+                          <li>16h: Lanche/Smoothie (~20%)</li>
+                          <li>20h: Jantar (~25%)</li>
                         </ul>
                       </div>
                     </div>
@@ -841,7 +1230,7 @@ export function Ebook() {
                   </div>
 
                   {/* 6. Hidratação */}
-                  <div className="bg-gradient-to-r from-cyan-50 to-blue-50 p-6 rounded-xl">
+                  <div className="bg-cyan-50 p-6 rounded-xl">
                     <h3 className="text-lg font-bold text-emerald-800 mb-3">6. Hidratação Adequada</h3>
                     <h4 className="font-bold text-blue-700 mb-3">💧 A Regra da Urina Clara</h4>
                     <p className="text-gray-700 mb-4">Esqueça contagem de litros! Use sua urina como indicador.</p>
@@ -890,7 +1279,11 @@ export function Ebook() {
                 onToggle={() => toggleSection("macros")}
               >
                 <div className="space-y-6">
-                  <h3 className="text-lg font-bold text-emerald-800">Para Ganho de Peso Limpo:</h3>
+                  <h3 className="text-lg font-bold text-emerald-800">
+                    {userData?.goal === "muscle-gain" ? "Para Ganho de Peso Limpo:" : 
+                     userData?.goal === "lose-weight" ? "Para Perda de Gordura com Preservação Muscular:" : 
+                     "Para Manutenção e Performance:"}
+                  </h3>
 
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
@@ -925,7 +1318,7 @@ export function Ebook() {
                     </table>
                   </div>
 
-                  <div className="bg-gradient-to-r from-emerald-100 to-green-100 p-6 rounded-xl">
+                  <div className="bg-emerald-100 p-6 rounded-xl">
                     <h4 className="font-bold text-emerald-800 mb-4">Seu Plano Prático ({userData?.weight}kg):</h4>
                     <div className="text-center mb-4">
                       <span className="text-4xl font-bold text-emerald-600">{dietPlan?.calories}</span>
@@ -967,365 +1360,67 @@ export function Ebook() {
             </div>
 
             {/* --- O PROTOCOLO --- */}
-            <div className={activeTab === "protocolo" ? "block space-y-4 animate-in fade-in duration-500" : "hidden"}>
+            <div className={activeTab === "protocolo" ? "block space-y-4 animate-in fade-in duration-500" : "hidden print:block print:space-y-4"}>
               <div className="mb-6 flex items-center justify-between print:hidden">
                 <h2 className="text-2xl font-black text-gray-800 uppercase flex items-center gap-3">
                   🥩 O PROTOCOLO
                 </h2>
-                <div className="h-1 flex-1 ml-4 bg-gradient-to-r from-emerald-200 to-transparent rounded-full" />
+                <div className="h-1 flex-1 ml-4 bg-emerald-200 rounded-full" />
               </div>
               {/* Combinações */}
               <Section
-                id="combinacoes"
-                title="🔧 COMO FAZER COMBINAÇÕES PARA GANHAR PESO"
-                expanded={expandedSection === "combinacoes"}
-                onToggle={() => toggleSection("combinacoes")}
+                id="guia-montagem"
+                title="🍽️ GUIA DE MONTAGEM DE PRATOS"
+                expanded={expandedSection === "guia-montagem"}
+                onToggle={() => toggleSection("guia-montagem")}
               >
-                <div className="space-y-6">
-                  <div className="bg-gradient-to-r from-emerald-500 to-green-500 text-white p-6 rounded-xl text-center">
-                    <h3 className="text-xl font-bold mb-2">A Fórmula Perfeita da Selva:</h3>
-                    <p className="text-2xl font-bold">FRUTAS DOCES + RAÍZES/TUBÉRCULOS + CARNES GORDAS = GANHO DE PESO</p>
+                <div className="space-y-8">
+                  <div className="bg-emerald-600 text-white p-6 rounded-xl text-center shadow-lg">
+                     <h3 className="text-xl font-bold mb-2">A Regra de Ouro dos Três Pilares:</h3>
+                     <p className="text-lg opacity-90">🍌 Frutas Doces + 🥔 Raízes Fortes + 🥩 Carnes Gordas</p>
                   </div>
 
-                  {/* Elemento 1: Frutas */}
-                  <div className="bg-slate-50 p-6 rounded-xl">
-                    <h4 className="text-lg font-bold text-emerald-800 mb-3">
-                      🍌 ELEMENTO 1: Frutas Doces e Ricas em Carboidratos
-                    </h4>
-                    <p className="text-gray-700 mb-4">
-                      Fornecem energia rápida, vitaminas, minerais e fibras. São carboidratos naturais que não causam
-                      inflamação.
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {[
-                        { name: "Banana-prata/nanica", carbs: "26g/unidade" },
-                        { name: "Banana-da-terra", carbs: "57g/unidade" },
-                        { name: "Manga", carbs: "50g/unidade" },
-                        { name: "Mamão papaya", carbs: "43g/unidade" },
-                        { name: "Jaca", carbs: "95g/xícara" },
-                        { name: "Tâmaras secas", carbs: "18g/unidade" },
-                      ].map((fruit, i) => (
-                        <div key={i} className="bg-white p-3 rounded-lg">
-                          <p className="font-medium text-sm">{fruit.name}</p>
-                          <p className="text-xs text-gray-500">{fruit.carbs}</p>
-                        </div>
-                      ))}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-slate-50 p-4 rounded-xl border border-gray-100">
+                       <h4 className="font-bold text-emerald-800 mb-2 flex items-center gap-2">🍌 1. Carboidratos Reais</h4>
+                       <p className="text-xs text-gray-500 mb-3">Escolha 1 raiz + 1-2 frutas base:</p>
+                       <div className="flex flex-wrap gap-1">
+                          {["Mandioca", "Batata-doce", "Inhame", "Banana", "Manga", "Tâmaras"].map(item => (
+                             <span key={item} className="px-2 py-1 bg-white rounded-md text-[10px] border border-gray-200">{item}</span>
+                          ))}
+                       </div>
+                    </div>
+                    <div className="bg-slate-50 p-4 rounded-xl border border-gray-100">
+                       <h4 className="font-bold text-emerald-800 mb-2 flex items-center gap-2">🥩 2. Proteínas & Gorduras</h4>
+                       <p className="text-xs text-gray-500 mb-3">Cortes com gordura natural para saciedade:</p>
+                       <div className="flex flex-wrap gap-1">
+                          {["Acém", "Fraldinha", "Coxa/Sobrecoxa", "Ovos", "Fígado", "Abacate"].map(item => (
+                             <span key={item} className="px-2 py-1 bg-white rounded-md text-[10px] border border-gray-200">{item}</span>
+                          ))}
+                       </div>
                     </div>
                   </div>
 
-                  {/* Elemento 2: Raízes */}
-                  <div className="bg-slate-50 p-6 rounded-xl">
-                    <h4 className="text-xl font-bold text-green-800 mb-3">🥔 ELEMENTO 2: Raízes e Tubérculos</h4>
-                    <p className="text-gray-700 mb-4">
-                      Carboidratos complexos de longa duração, saciantes, ricos em nutrientes e extremamente acessíveis.
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {[
-                        { name: "Batata-doce", carbs: "52g/200g" },
-                        { name: "Mandioca/Aipim", carbs: "76g/200g" },
-                        { name: "Batata-inglesa", carbs: "34g/200g" },
-                        { name: "Inhame", carbs: "56g/200g" },
-                        { name: "Cará", carbs: "50g/200g" },
-                        { name: "Beterraba", carbs: "20g/200g" },
-                      ].map((root, i) => (
-                        <div key={i} className="bg-white p-3 rounded-lg">
-                          <p className="font-medium text-sm">{root.name}</p>
-                          <p className="text-xs text-gray-500">{root.carbs}</p>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <MealCard
+                      icon="🍳"
+                      title="EXEMPLO 1: Power Breakfast"
+                      subtitle="Ovos + Abacate + Batata-doce"
+                      items={["4 ovos mexidos", "1 abacate médio", "200g batata-doce", "2 bananas"]}
+                      calories={800} protein={28} fat={48} carbs={65}
+                    />
+                    <MealCard
+                      icon="🥩"
+                      title="EXEMPLO 2: Muscle Lunch"
+                      subtitle="Carne Vermelha + Mandioca + Vegetais"
+                      items={["200g-250g carne gorda", "300g mandioca", "Cenoura ralada", "1 manga"]}
+                      calories={900} protein={50} fat={50} carbs={70}
+                    />
                   </div>
 
-                  {/* Elemento 3: Carnes */}
-                  <div className="bg-red-50 p-6 rounded-xl">
-                    <h4 className="text-xl font-bold text-red-800 mb-3">🥩 ELEMENTO 3: Carnes Gordas</h4>
-                    <p className="text-gray-700 mb-4">
-                      Proteína de alta qualidade + gorduras saturadas saudáveis = construção muscular + densidade
-                      calórica.
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {[
-                        "Acém",
-                        "Músculo bovino",
-                        "Fraldinha",
-                        "Costela bovina",
-                        "Coxa de frango COM PELE",
-                        "Fígado bovino",
-                        "Coração bovino",
-                        "Moela",
-                      ].map((meat, i) => (
-                        <div key={i} className="bg-white p-3 rounded-lg">
-                          <p className="font-medium text-sm">{meat}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-4 bg-green-100 border-l-4 border-green-500 p-4 rounded-r-lg">
-                      <p className="text-green-800">
-                        💰 <strong>ECONOMIA MÁXIMA:</strong> Negocie com açougues locais. Compre cortes mais baratos em
-                        maior quantidade. Miúdos são extremamente baratos e nutritivos!
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Fórmula Prática */}
-                  <div className="bg-gradient-to-r from-emerald-100 to-green-100 p-6 rounded-xl">
-                    <h4 className="text-lg font-bold text-emerald-800 mb-4">🎯 FÓRMULA PRÁTICA: Monte Sua Refeição</h4>
-                    <div className="bg-white p-4 rounded-lg">
-                      <p className="text-center font-bold text-lg text-emerald-800 mb-4">
-                        ESTRUTURA DE CADA REFEIÇÃO (~700-900 cal)
-                      </p>
-                      <ul className="space-y-2 text-gray-700">
-                        <li>
-                          <strong>1 PORÇÃO PROTEÍNA:</strong> 200-250g de carne gorda
-                        </li>
-                        <li>
-                          <strong>1 PORÇÃO CARBOIDRATO:</strong> 200-300g de raiz/tubérculo
-                        </li>
-                        <li>
-                          <strong>1 PORÇÃO GORDURA:</strong> 3-4 col. sopa óleo/manteiga/banha
-                        </li>
-                        <li>
-                          <strong>1-2 FRUTAS DOCES:</strong> Como sobremesa ou junto
-                        </li>
-                        <li>
-                          <strong>VEGETAIS PERMITIDOS:</strong> Cenoura e beterraba
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </Section>
-
-              {/* Melhores Combinações */}
-              <Section
-                id="melhores"
-                title="🍽️ MELHORES COMBINAÇÕES DE ALIMENTOS"
-                expanded={expandedSection === "melhores"}
-                onToggle={() => toggleSection("melhores")}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <MealCard
-                    icon="🍳"
-                    title="COMBINAÇÃO 1: Power Breakfast"
-                    subtitle="Ovos + Abacate + Batata-doce"
-                    items={[
-                      "4 ovos inteiros mexidos em óleo de coco (2 col. sopa)",
-                      "1 abacate inteiro (200g)",
-                      "200g batata-doce assada",
-                      "2 bananas prata de sobremesa",
-                      "Sal rosa do Himalaia",
-                    ]}
-                    calories={800}
-                    protein={28}
-                    fat={48}
-                    carbs={65}
-                  />
-
-                  <MealCard
-                    icon="🥩"
-                    title="COMBINAÇÃO 2: Muscle Lunch"
-                    subtitle="Carne Vermelha + Mandioca + Vegetais"
-                    items={[
-                      "200g fraldinha ou acém",
-                      "250g mandioca assada em banha (3 col. sopa)",
-                      "Cenoura ralada com azeite (3 col. sopa)",
-                      "1 manga grande de sobremesa",
-                      "30g coco seco ralado",
-                    ]}
-                    calories={900}
-                    protein={50}
-                    fat={50}
-                    carbs={70}
-                  />
-
-                  <MealCard
-                    icon="🍗"
-                    title="COMBINAÇÃO 3: Recovery Dinner"
-                    subtitle="Frango + Banana-da-terra + Vegetais"
-                    items={[
-                      "2 coxas de frango com pele grelhadas",
-                      "2 bananas-da-terra assadas em óleo de coco (3 col. sopa)",
-                      "Beterraba cozida com manteiga",
-                      "1 xícara de uvas de sobremesa",
-                    ]}
-                    calories={850}
-                    protein={45}
-                    fat={52}
-                    carbs={60}
-                  />
-
-                  <MealCard
-                    icon="🥤"
-                    title="COMBINAÇÃO 4: Smoothie Denso"
-                    subtitle="Shake de Alta Caloria"
-                    items={[
-                      "3 bananas grandes",
-                      "3 col. sopa pasta de castanha-de-caju",
-                      "1 abacate pequeno (100g)",
-                      "200ml leite de coco integral",
-                      "2 col. sopa mel cru",
-                    ]}
-                    calories={750}
-                    protein={15}
-                    fat={42}
-                    carbs={85}
-                  />
-
-                  <MealCard
-                    icon="🥥"
-                    title="COMBINAÇÃO 5: Mix Energético"
-                    subtitle="Mix de Coco e Frutas Secas"
-                    items={[
-                      "30g coco seco ralado",
-                      "100g tâmaras secas",
-                      "50g coco chips torrado",
-                      "2 bananas frescas",
-                      "1 manga ou mamão de sobremesa",
-                    ]}
-                    calories={650}
-                    protein={8}
-                    fat={22}
-                    carbs={120}
-                  />
-                </div>
-
-                <div className="mt-6 bg-slate-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
-                  <p className="text-emerald-800">
-                    🔄 <strong>VARIAÇÃO É CHAVE:</strong> Não coma as mesmas combinações todos os dias. Alterne as
-                    proteínas, carboidratos e frutas para garantir variedade de nutrientes e evitar enjoar do protocolo!
-                  </p>
-                </div>
-              </Section>
-
-              {/* Cardápio Mensal */}
-              <Section
-                id="cardapio"
-                title="📅 CARDÁPIO MENSAL COMPLETO"
-                expanded={expandedSection === "cardapio"}
-                onToggle={() => toggleSection("cardapio")}
-              >
-                <div className="space-y-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-bold text-blue-800 mb-2">Como usar este cardápio:</h4>
-                    <ul className="text-sm text-blue-700 space-y-1">
-                      <li>• Siga os horários sugeridos ou adapte à sua rotina</li>
-                      <li>• As quantidades são referências para pessoa de 70kg</li>
-                      <li>• Ajuste as porções conforme seu peso e necessidades</li>
-                      <li>• Mantenha a urina clara ao longo do dia</li>
-                    </ul>
-                  </div>
-
-                  {/* Segunda-feira */}
-                  <div className="bg-white rounded-xl shadow-none overflow-hidden">
-                    <div className="bg-emerald-600 text-white p-4">
-                      <h4 className="text-xl font-bold">🗓️ SEGUNDA-FEIRA - Exemplo Completo</h4>
-                    </div>
-                    <div className="p-4 space-y-4">
-                      <DayMeal
-                        time="7:00"
-                        name="Refeição 1"
-                        calories={720}
-                        items={[
-                          "5 ovos mexidos em manteiga (2 col. sopa)",
-                          "1 abacate inteiro (200g)",
-                          "150g batata-doce assada",
-                          "2 bananas prata",
-                          "Café com leite de coco",
-                        ]}
-                        macros={{ protein: 32, fat: 45, carbs: 60 }}
-                      />
-
-                      <DayMeal
-                        time="10:30"
-                        name="Refeição 2"
-                        calories={680}
-                        items={[
-                          "Smoothie: 3 bananas + 3 col. pasta de coco + 1 abacate pequeno + 200ml leite de coco + 1 col. mel",
-                        ]}
-                        macros={{ protein: 15, fat: 38, carbs: 75 }}
-                      />
-
-                      <DayMeal
-                        time="13:30"
-                        name="Refeição 3"
-                        calories={880}
-                        items={[
-                          "250g fraldinha bovina grelhada",
-                          "300g mandioca assada em óleo de coco (4 col.)",
-                          "Cenoura e beterraba raladas com azeite (3 col.)",
-                          "1 manga grande de sobremesa",
-                          "30g coco seco ralado",
-                        ]}
-                        macros={{ protein: 52, fat: 48, carbs: 75 }}
-                      />
-
-                      <DayMeal
-                        time="17:00"
-                        name="Refeição 4"
-                        calories={450}
-                        items={["30g coco seco ralado", "2 bananas", "1 xícara de uvas", "50g tâmaras secas"]}
-                        macros={{ protein: 18, fat: 28, carbs: 50 }}
-                      />
-
-                      <DayMeal
-                        time="20:00"
-                        name="Refeição 5"
-                        calories={840}
-                        items={[
-                          "2 coxas + 2 sobrecoxas de frango com pele assadas",
-                          "2 bananas-da-terra assadas em óleo de coco (3 col.)",
-                          "Cenoura cozida com manteiga (2 col.)",
-                          "1 mamão papaya pequeno de sobremesa",
-                        ]}
-                        macros={{ protein: 48, fat: 52, carbs: 62 }}
-                      />
-
-                      <div className="bg-green-100 p-4 rounded-lg text-center">
-                        <p className="text-green-800 font-bold text-lg">✅ Total do Dia: ~3.570 calorias</p>
-                        <p className="text-green-700">Proteína: 165g | Gorduras: 211g | Carboidratos: 322g</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Rotação */}
-                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl">
-                    <h4 className="text-xl font-bold text-purple-800 mb-4">📝 Rotação Semanal</h4>
-                    <p className="text-gray-700 mb-4">
-                      Este cardápio apresenta 1 dia completo como exemplo. Para as semanas seguintes, você deve rotacionar
-                      as fontes:
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="bg-white p-4 rounded-lg">
-                        <h5 className="font-bold text-emerald-700">🥩 Proteínas</h5>
-                        <p className="text-sm text-gray-600">
-                          Alterne entre acém, fraldinha, músculo, coxa de frango, fígado, coração, moela
-                        </p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg">
-                        <h5 className="font-bold text-emerald-700">🍠 Carboidratos</h5>
-                        <p className="text-sm text-gray-600">
-                          Alterne entre batata-doce, mandioca, banana-da-terra, inhame, batata inglesa
-                        </p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg">
-                        <h5 className="font-bold text-emerald-700">🍌 Frutas</h5>
-                        <p className="text-sm text-gray-600">
-                          Alterne entre bananas, mangas, mamão, uvas, abacaxi, melancia
-                        </p>
-                      </div>
-                      <div className="bg-white p-4 rounded-lg">
-                        <h5 className="font-bold text-emerald-700">🥑 Gorduras</h5>
-                        <p className="text-sm text-gray-600">
-                          Alterne entre abacate, óleo de coco, azeite, manteiga, banha
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
-                    <p className="text-emerald-800">
-                      📅 <strong>MEAL PREP:</strong> Separe 2-3 horas no domingo para preparar refeições da semana.
-                      Cozinhe 3kg de frango, 2kg de batata-doce, 2kg de mandioca. Armazene em potes de vidro na geladeira!
+                  <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg">
+                    <p className="text-emerald-800 text-sm italic">
+                      🔄 <strong>VARIAÇÃO:</strong> Alterne as fontes diariamente para evitar a monotonia e garantir todos os micronutrientes ancestrais.
                     </p>
                   </div>
                 </div>
@@ -1347,57 +1442,22 @@ export function Ebook() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <SmoothieCard
-                      icon="🍌"
-                      name="Mass Gainer da Selva"
-                      ingredients={[
-                        "3 bananas maduras",
-                        "1 abacate inteiro",
-                        "4 col. sopa coco ralado",
-                        "300ml leite de coco integral",
-                        "2 col. sopa mel cru",
-                        "2 col. sopa óleo de coco",
-                      ]}
-                      calories={950}
-                      protein={10}
-                      fat={62}
-                      carbs={90}
-                    />
-
-                    <SmoothieCard
-                      icon="🥭"
-                      name="Tropical Power"
-                      ingredients={[
-                        "2 mangas maduras",
-                        "1 abacate",
-                        "2 bananas",
-                        "200ml leite de coco",
-                        "3 col. sopa coco ralado",
-                        "1 col. sopa mel",
-                      ]}
-                      calories={880}
-                      protein={8}
-                      fat={50}
-                      carbs={105}
-                    />
-
-                    <SmoothieCard
-                      icon="🍫"
-                      name="Chocolate Ancestral"
-                      ingredients={[
-                        "3 bananas",
-                        "1 abacate",
-                        "3 col. sopa cacau cru em pó",
-                        "4 col. sopa coco ralado",
-                        "300ml leite de coco",
-                        "2 col. sopa mel",
-                      ]}
-                      calories={920}
-                      protein={12}
-                      fat={58}
-                      carbs={95}
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-white p-4 rounded-xl shadow-sm border border-purple-100 italic">
+                       <p className="font-bold text-purple-800 mb-1">🍌 Mass Gainer:</p>
+                       <p className="text-[10px] text-gray-600 leading-tight">3 Bananas + 1 Abacate + 300ml Leite de Coco + Mel + Óleo de Coco</p>
+                       <p className="text-xs font-bold text-purple-700 mt-2">~950 kcal | 10g Prot</p>
+                    </div>
+                    <div className="bg-white p-4 rounded-xl shadow-sm border border-purple-100 italic">
+                       <p className="font-bold text-purple-800 mb-1">🥭 Tropical Power:</p>
+                       <p className="text-[10px] text-gray-600 leading-tight">2 Mangas + 1 Abacate + 2 Bananas + 200ml Leite de Coco + Coco Ralado</p>
+                       <p className="text-xs font-bold text-purple-700 mt-2">~880 kcal | 8g Prot</p>
+                    </div>
+                    <div className="bg-white p-4 rounded-xl shadow-sm border border-purple-100 italic">
+                       <p className="font-bold text-purple-800 mb-1">🍫 Chocolate Ancestral:</p>
+                       <p className="text-[10px] text-gray-600 leading-tight">3 Bananas + 1 Abacate + Cacau em Pó + Coco Ralado + Leite de Coco + Mel</p>
+                       <p className="text-xs font-bold text-purple-700 mt-2">~920 kcal | 12g Prot</p>
+                    </div>
                   </div>
 
                   <div
@@ -1445,51 +1505,43 @@ export function Ebook() {
 
                   <h4 className="text-lg font-bold text-emerald-800">Suplementos Essenciais:</h4>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <SupplementCard
-                      name="1. CREATINA MONOHIDRATADA"
-                      dose="5g por dia (1 colher de chá)"
-                      timing="Qualquer hora do dia, com água"
-                      benefits="Aumenta força, ganho muscular e retenção de água"
-                      note="Mais estudada e segura, não precisa de 'fase de carga'"
-                      cost="R$ 50-80 (dura 2 meses)"
-                    />
-
-                    <SupplementCard
-                      name="2. ÔMEGA-3 (EPA/DHA)"
-                      dose="3g por dia (óleo de peixe)"
-                      timing="Com refeições"
-                      benefits="Reduz inflamação, melhora recuperação muscular"
-                      note="Escolha marcas com certificação de pureza"
-                      cost="R$ 40-90 (dura 1 mês)"
-                    />
-
-                    <SupplementCard
-                      name="3. VITAMINA D3 + K2"
-                      dose="5.000 UI D3 + 200mcg K2"
-                      timing="Pela manhã com gordura"
-                      benefits="Saúde óssea, produção hormonal, imunidade"
-                      note="Maioria das pessoas é deficiente em D3"
-                      cost="R$ 30-60 (dura 3-6 meses)"
-                    />
-
-                    <SupplementCard
-                      name="4. MAGNÉSIO"
-                      dose="400mg antes de dormir"
-                      timing="1 hora antes de deitar"
-                      benefits="Recuperação muscular, qualidade do sono"
-                      note="Prefira magnésio glicinato ou treonato"
-                      cost="R$ 25-50 (dura 2 meses)"
-                    />
-
-                    <SupplementCard
-                      name="5. ZINCO"
-                      dose="30mg por dia"
-                      timing="À noite, longe do café"
-                      benefits="Testosterona natural, sistema imune"
-                      note="Não exceda 40mg/dia"
-                      cost="R$ 20-40 (dura 3 meses)"
-                    />
+                  <div className="bg-slate-50 border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                    <table className="w-full text-left text-sm">
+                      <thead>
+                        <tr className="bg-emerald-800 text-white">
+                          <th className="p-3">Suplemento</th>
+                          <th className="p-3">Dose / Horário</th>
+                          <th className="p-3">Benefício Principal</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-gray-100">
+                          <td className="p-3 font-bold">Creatina</td>
+                          <td className="p-3">5g / Qualquer hora</td>
+                          <td className="p-3 italic">Força e volume muscular</td>
+                        </tr>
+                        <tr className="border-b border-gray-100 bg-white">
+                          <td className="p-3 font-bold">Ômega-3</td>
+                          <td className="p-3">3g / Com refeição</td>
+                          <td className="p-3 italic">Recuperação e anti-inflamatório</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="p-3 font-bold">Vit D3+K2</td>
+                          <td className="p-3">5.000UI / Manhã</td>
+                          <td className="p-3 italic">Imunidade e Hormonal</td>
+                        </tr>
+                        <tr className="border-b border-gray-100 bg-white">
+                          <td className="p-3 font-bold">Magnésio</td>
+                          <td className="p-3">400mg / Noite</td>
+                          <td className="p-3 italic">Sono e Relaxamento</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 font-bold">Zinco</td>
+                          <td className="p-3">30mg / Noite</td>
+                          <td className="p-3 italic">Testosterona e Imunidade</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
 
                   <div className="bg-green-100 p-6 rounded-xl text-center">
@@ -1551,12 +1603,12 @@ export function Ebook() {
             </div>
 
             {/* --- PROGRESSO --- */}
-            <div className={activeTab === "progresso" ? "block space-y-4 animate-in fade-in duration-500" : "hidden"}>
+            <div className={activeTab === "progresso" ? "block space-y-4 animate-in fade-in duration-500" : "hidden print:block print:space-y-4"}>
               <div className="mb-6 flex items-center justify-between print:hidden">
                 <h2 className="text-2xl font-black text-gray-800 uppercase flex items-center gap-3">
                   📈 PROGRESSO
                 </h2>
-                <div className="h-1 flex-1 ml-4 bg-gradient-to-r from-emerald-200 to-transparent rounded-full" />
+                <div className="h-1 flex-1 ml-4 bg-emerald-200 rounded-full" />
               </div>
 
               {/* Treino */}
@@ -1567,26 +1619,22 @@ export function Ebook() {
                 onToggle={() => toggleSection("treino")}
               >
                 <div className="space-y-6">
-                  <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                    <p className="text-red-800 font-bold">⚠️ ATENÇÃO: Alimentação representa 70% dos resultados!</p>
-                    <p className="text-red-700">
-                      Você pode treinar perfeitamente, mas se não comer suficiente, NÃO VAI CRESCER.
-                    </p>
+                  <div className="bg-orange-50 border-l-4 border-orange-500 p-3 rounded-r-lg text-sm text-orange-900">
+                     <strong>Foco:</strong> Hipertrofia Funcional. O treino sinaliza, a nutrição constrói.
                   </div>
 
-                  <div className="bg-white rounded-xl shadow p-6">
-                    <h4 className="text-lg font-bold text-emerald-800 mb-4">Estrutura do Treino:</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  <div className="bg-emerald-900 text-white rounded-xl p-4 shadow-md">
+                    <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
                       {[
-                        { label: "Frequência", value: "4-5 dias/semana" },
-                        { label: "Séries", value: "3-4 por exercício" },
-                        { label: "Repetições", value: "8-12 (hipertrofia)" },
-                        { label: "Descanso", value: "60-90 segundos" },
-                        { label: "Duração", value: "45-60 minutos" },
+                        { label: "Freq.", value: "4-5x" },
+                        { label: "Séries", value: "3-4" },
+                        { label: "Reps", value: "8-12" },
+                        { label: "Desc.", value: "60s" },
+                        { label: "Duração", value: "50min" },
                       ].map((item, i) => (
-                        <div key={i} className="bg-slate-50 p-3 rounded-lg text-center">
-                          <p className="text-sm text-gray-600">{item.label}</p>
-                          <p className="font-bold text-emerald-800">{item.value}</p>
+                        <div key={i} className="text-center border-r border-emerald-800 last:border-0">
+                          <p className="text-[10px] uppercase opacity-70">{item.label}</p>
+                          <p className="font-bold text-sm">{item.value}</p>
                         </div>
                       ))}
                     </div>
@@ -1707,23 +1755,31 @@ export function Ebook() {
                     ))}
                   </div>
 
-                  <div className="bg-gradient-to-r from-green-100 to-teal-100 p-6 rounded-xl">
+                  <div className="bg-emerald-100 p-6 rounded-xl">
                     <h4 className="text-xl font-bold text-green-800 mb-4">🎯 Meta Realista:</h4>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-green-700">0,5-1kg por semana = 2-4kg por mês</p>
+                      <p className="text-2xl font-bold text-green-700">
+                        {userData?.goal === "lose-weight" ? "0,5-1kg de gordura por semana" : "0,5-1kg de peso por semana"}
+                      </p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                       <div className="bg-white p-3 rounded-lg">
-                        <p className="font-bold text-emerald-700">Se ganhar mais rápido:</p>
-                        <p className="text-sm text-gray-600">Pode estar acumulando gordura. Reduza calorias levemente.</p>
+                        <p className="font-bold text-emerald-700">Se {userData?.goal === "lose-weight" ? "perder" : "ganhar"} mais rápido:</p>
+                        <p className="text-sm text-gray-600">
+                          {userData?.goal === "lose-weight" ? "Pode estar perdendo massa magra. Aumente um pouco as calorias." : "Pode estar acumulando gordura. Reduza calorias levemente."}
+                        </p>
                       </div>
                       <div className="bg-white p-3 rounded-lg">
-                        <p className="font-bold text-emerald-700">Se ganhar mais devagar:</p>
-                        <p className="text-sm text-gray-600">Aumente 200-300 calorias diárias.</p>
+                        <p className="font-bold text-emerald-700">Se {userData?.goal === "lose-weight" ? "perder" : "ganhar"} mais devagar:</p>
+                        <p className="text-sm text-gray-600">
+                          {userData?.goal === "lose-weight" ? "Reduza mais 200 calorias diárias das porções de raízes." : "Aumente 200-300 calorias diárias."}
+                        </p>
                       </div>
                       <div className="bg-white p-3 rounded-lg">
                         <p className="font-bold text-emerald-700">Resultado ideal:</p>
-                        <p className="text-sm text-gray-600">Ganho constante com aumento de força.</p>
+                        <p className="text-sm text-gray-600">
+                          {userData?.goal === "lose-weight" ? "Perda constante preservando as medidas musculares." : "Ganho constante com aumento de força."}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -1732,16 +1788,16 @@ export function Ebook() {
                     <h4 className="font-bold text-red-800 mb-3">🚨 Sinais de Alerta:</h4>
                     <ul className="space-y-2 text-red-700">
                       <li>
-                        • <strong>Ganho muito rápido (+2kg/semana):</strong> Provavelmente muita gordura. Reduza calorias.
+                        • <strong>{userData?.goal === "lose-weight" ? "Perda" : "Ganho"} muito rápido:</strong> Pode indicar perda de {userData?.goal === "lose-weight" ? "massa muscular" : "controle da gordura"}.
                       </li>
                       <li>
-                        • <strong>Cintura crescendo muito:</strong> Pode indicar acúmulo de gordura visceral.
+                        • <strong>Cintura {userData?.goal === "lose-weight" ? "estagnada" : "crescendo muito"}:</strong> {userData?.goal === "lose-weight" ? "Pode precisar de mais atividade física." : "Indica acúmulo de gordura visceral."}
                       </li>
                       <li>
-                        • <strong>Força não aumenta:</strong> Pode estar comendo pouco ou não recuperando.
+                        • <strong>Força {userData?.goal === "lose-weight" ? "caindo" : "não aumenta"}:</strong> Você {userData?.goal === "lose-weight" ? "pode estar em um déficit muito agressivo." : "pode estar comendo pouco ou não recuperando."}
                       </li>
                       <li>
-                        • <strong>Energia baixa constante:</strong> Pode ser excesso ou falta de carboidratos.
+                        • <strong>Energia baixa constante:</strong> Sinal de desequilíbrio hormonal ou falta de calorias básicas.
                       </li>
                     </ul>
                   </div>
@@ -1751,7 +1807,7 @@ export function Ebook() {
           </div>
 
           {/* Footer */}
-          <footer className="mt-12 bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-600 text-white py-8 px-4 rounded-xl pdf-footer">
+          <footer className="mt-12 bg-emerald-800 text-white py-8 px-4 rounded-xl pdf-footer">
             <div className="text-center">
               <div className="mb-4 flex justify-center">
                 <img
@@ -1760,14 +1816,17 @@ export function Ebook() {
                   className="w-28 h-auto brightness-0 invert"
                 />
               </div>
-              <h2 className="text-2xl font-bold mb-2">DIETA DA SELVA</h2>
-              <p className="opacity-90 mb-4">Protocolo de Ganho de Peso Saudável</p>
-              <p className="text-sm opacity-80">Alimentação Ancestral para Resultados Modernos</p>
-              <p className="mt-4 font-medium">Desenvolvido por Julimar Meneses - Nutricionista</p>
-              <p className="text-sm opacity-70 mt-2">© 2026 - Todos os direitos reservados</p>
+              <h2 className="text-xl font-normal mb-1 opacity-50 tracking-widest">DIETA DA SELVA</h2>
+              <p className="text-[10px] opacity-40 mb-4 font-normal">
+                Protocolo de {userData?.goal === "muscle-gain" ? "Ganho de Peso" : userData?.goal === "lose-weight" ? "Queima de Gordura" : "Saúde e Vigor"} Saudável
+              </p>
+              <p className="text-[9px] opacity-30 font-normal">Alimentação Ancestral para Resultados Modernos</p>
+              <p className="mt-4 text-[11px] font-normal opacity-40">Desenvolvido por Julimar Meneses - Nutricionista | @dr.julimar.meneses</p>
+              <p className="text-[8px] opacity-20 mt-2 font-normal">© 2026 - Todos os direitos reservados</p>
             </div>
           </footer>
         </div>
+      </div>
       </div>
     </div>
   )
@@ -1787,16 +1846,16 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <div id={id} className="bg-white rounded-xl shadow-none overflow-hidden">
+    <div id={id} className="bg-white rounded-lg shadow-none overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-6 bg-gradient-to-r from-emerald-500 to-green-500 text-white hover:from-emerald-600 hover:to-green-600 transition-colors pdf-header"
+        className="w-full flex items-center justify-between p-6 bg-emerald-600 text-white hover:bg-emerald-700 transition-colors pdf-header"
       >
         <h2 className="text-lg md:text-xl font-bold">{title}</h2>
         {expanded ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
       </button>
       <div
-        className={expanded ? "p-8 md:p-10 block" : "hidden"}
+        className={expanded ? "p-8 md:p-10 block" : "hidden print:block print:p-8 print:md:p-10"}
         data-section-content
       >
         {children}
@@ -1825,7 +1884,7 @@ function MealCard({
   carbs: number
 }) {
   return (
-    <div className="bg-gradient-to-br from-emerald-50 to-green-50 p-5 rounded-xl">
+    <div className="bg-emerald-50 p-5 rounded-xl">
       <div className="text-3xl mb-2">{icon}</div>
       <h4 className="font-bold text-emerald-800">{title}</h4>
       <p className="text-sm text-gray-600 mb-3">{subtitle}</p>
@@ -1910,7 +1969,7 @@ function SmoothieCard({
   carbs: number
 }) {
   return (
-    <div className="bg-gradient-to-br from-teal-50 to-emerald-50 p-5 rounded-xl">
+    <div className="bg-teal-50 p-5 rounded-xl">
       <div className="text-4xl text-center mb-2">{icon}</div>
       <h4 className="font-bold text-teal-800 text-center mb-3">{name}</h4>
       <ul className="text-sm text-gray-700 space-y-1 mb-4">
@@ -1984,7 +2043,7 @@ function SupplementCard({
 
 function WorkoutDay({ day, focus, exercises }: { day: string; focus: string; exercises: string[] }) {
   return (
-    <div className="bg-gradient-to-r from-emerald-50 to-green-50 p-4 rounded-lg">
+    <div className="bg-emerald-50 p-4 rounded-lg">
       <div className="flex items-center gap-3 mb-3">
         <span className="bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold">{day}</span>
         <span className="font-bold text-emerald-800">{focus}</span>
