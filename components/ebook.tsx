@@ -187,7 +187,7 @@ export function Ebook() {
 
   if (appState === "welcome") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -203,7 +203,7 @@ export function Ebook() {
               <img 
                 src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
                 alt="Dieta da Selva Logo" 
-                className="w-24 h-24"
+                className="w-48 h-auto"
               />
             </motion.div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">DIETA DA SELVA</h1>
@@ -256,7 +256,7 @@ export function Ebook() {
 
   if (appState === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
         <div className="relative w-24 h-24 mb-8">
           <motion.div
             className="absolute inset-0 border-4 border-amber-200 rounded-full"
@@ -272,7 +272,7 @@ export function Ebook() {
             <img 
               src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
               alt="Logo" 
-              className="w-12 h-12"
+              className="w-16 h-auto"
             />
           </div>
         </div>
@@ -313,7 +313,7 @@ export function Ebook() {
             <img 
               src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
               alt="Logo" 
-              className="w-28 h-28 mx-auto"
+              className="w-40 h-auto mx-auto"
             />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-2">DIETA DA SELVA</h1>
@@ -1669,7 +1669,7 @@ export function Ebook() {
                 <img 
                   src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png" 
                   alt="Logo" 
-                  className="w-20 h-20 brightness-0 invert"
+                  className="w-28 h-auto brightness-0 invert"
                 />
               </div>
               <h2 className="text-2xl font-bold mb-2">DIETA DA SELVA</h2>
