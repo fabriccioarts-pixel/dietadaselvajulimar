@@ -233,9 +233,9 @@ export function Ebook() {
             <Button
               size="lg"
               onClick={() => setAppState("onboarding")}
-              className="w-full h-16 text-xl bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-none transition-all hover:scale-[1.02]"
+              className="w-full h-12 md:h-16 text-xs md:text-lg bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-none transition-all hover:scale-[1.02]"
             >
-              Começar Agora <Play className="ml-2 fill-current" size={20} />
+               Começar Agora <Play className="ml-2 fill-current" size={20} />
             </Button>
             <p className="text-xs text-gray-400">Desenvolvido por Julimar Meneses - Nutricionista | @dr.julimar.meneses</p>
           </div>
@@ -333,32 +333,53 @@ export function Ebook() {
               </p>
 
               {/* Quick Summary Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-                 <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-2">Energia Diária</p>
-                    <p className="text-3xl font-black text-emerald-950">{dietPlan?.calories} <span className="text-xs font-normal">kcal</span></p>
-                    <p className="text-[10px] text-emerald-600/60 mt-2 italic">Meta recomendada</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10">
+                 <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex flex-col justify-center">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-1">Calorias</p>
+                    <p className="text-2xl font-black text-emerald-950">{dietPlan?.calories}</p>
+                    <p className="text-[9px] text-emerald-600/60 mt-1 italic">Diárias</p>
                  </div>
-                 <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-2">Proteína</p>
-                    <p className="text-3xl font-black text-emerald-950">{dietPlan?.macros.protein}g</p>
-                    <p className="text-[10px] text-emerald-600/60 mt-2 italic">Aporte essencial</p>
+                 <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex flex-col justify-center">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-1">Proteína</p>
+                    <p className="text-2xl font-black text-emerald-950">{dietPlan?.macros.protein}g</p>
+                    <p className="text-[9px] text-emerald-600/60 mt-1 italic">Essencial</p>
                  </div>
-                 <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
-                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-2">Metabolismo</p>
-                    <p className="text-3xl font-black text-emerald-950">{dietPlan?.bmr} <span className="text-xs font-normal">kcal</span></p>
-                    <p className="text-[10px] text-emerald-600/60 mt-2 italic">Taxa Basal (TMB)</p>
+                 <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex flex-col justify-center">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-1">Carbos</p>
+                    <p className="text-2xl font-black text-emerald-950">{dietPlan?.macros.carbs}g</p>
+                    <p className="text-[9px] text-emerald-600/60 mt-1 italic">Energia</p>
+                 </div>
+                 <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex flex-col justify-center">
+                    <p className="text-[10px] uppercase font-bold text-emerald-600 tracking-widest mb-1">Gorduras</p>
+                    <p className="text-2xl font-black text-emerald-950">{dietPlan?.macros.fats}g</p>
+                    <p className="text-[9px] text-emerald-600/60 mt-1 italic">Hormonal</p>
+                 </div>
+                 <div className="bg-amber-50 p-4 rounded-xl border border-amber-100 flex flex-col justify-center">
+                    <p className="text-[10px] uppercase font-bold text-amber-600 tracking-widest mb-1">Objetivo</p>
+                    <p className="text-lg font-black text-amber-950 leading-tight">
+                      {userData?.goal === "muscle-gain" ? "+400 kcal" : userData?.goal === "lose-weight" ? "-400 kcal" : "Manter"}
+                    </p>
+                    <p className="text-[9px] text-amber-600/60 mt-1 italic">
+                      {userData?.goal === "muscle-gain" ? "Superávit" : userData?.goal === "lose-weight" ? "Déficit" : "Equilíbrio"}
+                    </p>
+                 </div>
+                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col justify-center">
+                    <p className="text-[10px] uppercase font-bold text-slate-600 tracking-widest mb-1">Gasto (TDEE)</p>
+                    <p className="text-2xl font-black text-slate-950">{dietPlan?.tdee}</p>
+                    <p className="text-[9px] text-slate-600/60 mt-1 italic">Base Diária</p>
                  </div>
               </div>
 
               <div className="flex justify-center">
                  <Button
                     size="lg"
-                    onClick={handleDownload}
-                    className="h-16 px-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-lg font-black uppercase tracking-wider flex items-center gap-3 transition-transform hover:scale-105 active:scale-95 shadow-lg"
+                    onClick={() => {
+                       handleDownload();
+                    }}
+                    className="w-full sm:w-auto h-12 sm:h-16 px-6 sm:px-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[10px] sm:text-base uppercase tracking-tight sm:tracking-wider flex items-center justify-center gap-2 sm:gap-3 transition-transform hover:scale-105 active:scale-95 shadow-lg group"
                  >
-                    <Download className="w-5 h-5 transition-transform group-hover:animate-bounce" />
-                    Baixar Protocolo PDF
+                    <Download className="w-4 h-4 sm:w-5 h-5 group-hover:animate-bounce" />
+                    acesse seu plano personalizado
                  </Button>
               </div>
 
@@ -372,89 +393,131 @@ export function Ebook() {
 
       {/* FULL EBOOK CONTENT (MANUAL) */}
       <div className={`${appState === "success" ? "hidden print:block" : (appState === "ebook" ? "block" : "hidden")}`}>
-      {/* Header */}
-      <header className="relative overflow-hidden print:h-[297mm] print:w-[210mm] print:m-0 print:rounded-none bg-emerald-950 min-h-[500px] flex flex-col justify-center">
-        {/* Background Image for Web and Print */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/jungle-bg.png" 
-            alt="Background" 
-            className="w-full h-full object-cover opacity-60 print:opacity-100"
-          />
-          <div className="absolute inset-0 bg-emerald-950/90" />
+      
+      {/* 🚀 CAPA PARA O SITE (WEB ONLY) - Verde, Impactante, Premium */}
+      <header className="relative overflow-hidden bg-emerald-950 min-h-[500px] flex flex-col justify-center items-center px-6 print:hidden">
+        {/* Background Sophistication */}
+        <div className="absolute inset-0 z-0 opacity-40">
+           <img 
+             src="/jungle-bg.png" 
+             alt="Background" 
+             className="w-full h-full object-cover"
+           />
+           <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/40 via-emerald-950/80 to-emerald-800" />
         </div>
 
-        <div className="max-w-4xl mx-auto text-center relative z-20 w-full py-16 px-6">
-          <div className="mb-10">
+        <div className="max-w-4xl mx-auto text-center relative z-20 w-full py-16 flex flex-col items-center">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-8"
+          >
             <img
               src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png"
               alt="Logo"
-              className="w-48 h-auto mx-auto drop-shadow-2xl relative z-30"
+              className="w-40 h-auto grayscale brightness-[3] opacity-90 drop-shadow-2xl"
             />
+          </motion.div>
+
+          <div className="space-y-4 mb-10">
+            <p className="text-emerald-400 font-bold tracking-[0.5em] text-xs uppercase">
+              Nutrição Ancestral Personalizada
+            </p>
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white !leading-none uppercase shadow-emerald-500/20">
+              DIETA DA <span className="text-emerald-500">SELVA</span>
+            </h1>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-white uppercase drop-shadow-lg !leading-none">
-            DIETA DA SELVA
-          </h1>
+          <div className="w-24 h-1.5 bg-emerald-500 rounded-full mb-12 shadow-lg shadow-emerald-500/50" />
 
-          <div className="inline-block px-8 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-12 uppercase tracking-[0.3em] font-black text-xs text-white">
-            Protocolo de Nutrição Ancestral
-          </div>
-
-          <div className="space-y-6 mb-16">
-            <div className="h-1.5 w-24 bg-emerald-400 mx-auto rounded-full" />
-            <div className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-light tracking-[0.2em] text-emerald-200 uppercase">
-                Personalizado para:
-              </h2>
-              <div className="text-5xl md:text-7xl font-black uppercase tracking-tight text-white">
-                {userData?.name}
-              </div>
-              <div className="text-xl md:text-3xl font-bold text-emerald-300 italic mt-6">
-                {userData?.goal === "muscle-gain" ? "Ganho de Massa Muscular" : (userData?.goal === "lose-weight" ? "Emagrecimento Saudável" : "Performance & Bem-Estar")}
-              </div>
+          <div className="space-y-4">
+            <p className="text-sm text-emerald-200/60 uppercase tracking-widest">Plano exclusivo de</p>
+            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight uppercase">
+              {userData?.name}
+            </h2>
+            <div className="inline-block px-6 py-2 rounded-full bg-emerald-500 text-white text-sm font-bold tracking-widest uppercase shadow-xl">
+              {userData?.goal === "muscle-gain" ? "Hipertrofia & Força" : (userData?.goal === "lose-weight" ? "Definição & Emagrecimento" : "Vitalidade & Performance")}
             </div>
           </div>
+        </div>
+      </header>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto bg-black/40 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/10 text-white">
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-widest opacity-60">Energia</p>
-              <p className="text-4xl font-black">{dietPlan?.calories}</p>
-              <p className="text-xs opacity-40 font-bold uppercase tracking-tighter">Kcal/Dia</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-widest opacity-60">Proteína</p>
-              <p className="text-4xl font-black">{dietPlan?.macros.protein}g</p>
-              <p className="text-xs opacity-40 font-bold uppercase tracking-tighter">Essencial</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-widest opacity-60">Gorduras</p>
-              <p className="text-4xl font-black">{dietPlan?.macros.fats}g</p>
-              <p className="text-xs opacity-40 font-bold uppercase tracking-tighter">Hormonal</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-widest opacity-60">Carbo</p>
-              <p className="text-4xl font-black">{dietPlan?.macros.carbs}g</p>
-              <p className="text-xs opacity-40 font-bold uppercase tracking-tighter">Energia</p>
-            </div>
+      {/* 📄 CAPA PARA O PDF (PRINT ONLY) - Ultra Minimalist, Branco, Profissional */}
+      <header 
+        className="hidden print:flex relative overflow-hidden bg-white flex-col justify-between items-center"
+        style={{ height: '297mm', width: '210mm', padding: '60px 40px', boxSizing: 'border-box' }}
+      >
+        {/* Top & Middle Content Wrapper */}
+        <div className="flex flex-col items-center justify-center flex-1 w-full">
+          <div className="space-y-4 mb-16 text-center">
+            <p style={{ fontSize: '10px', color: '#047857', fontWeight: 'bold', letterSpacing: '0.5em', textTransform: 'uppercase' }}>
+              O Protocolo de Nutrição Ancestral
+            </p>
+            <h1 style={{ fontSize: '72px', fontWeight: '100', tracking: '-0.05em', color: '#111827', lineHeight: '1', margin: '0', textTransform: 'uppercase' }}>
+              DIETA DA <span style={{ fontWeight: '900' }}>SELVA</span>
+            </h1>
           </div>
 
-          <div className="mt-20 text-[10px] opacity-30 font-normal tracking-[0.4em] uppercase hidden print:block border-t border-white/10 pt-10 text-white">
-            Nutricionista Julimar Meneses • @dr.julimar.meneses • Dieta da Selva
+          <div style={{ height: '1.5px', width: '120px', backgroundColor: '#10b981', marginBottom: '60px' }} />
+
+          <div className="space-y-6 mb-20 text-center">
+            <p style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.4em', color: '#9ca3af', fontWeight: '500' }}>Documento preparado para</p>
+            <h2 style={{ fontSize: '56px', fontWeight: '900', color: '#111827', margin: '0', textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
+              {userData?.name}
+            </h2>
+            <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#059669', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+              {userData?.goal === "muscle-gain" ? "Hipertrofia & Força" : (userData?.goal === "lose-weight" ? "Definição & Emagrecimento" : "Vitalidade & Performance")}
+            </p>
+          </div>
+
+          {/* Failsafe Horizontal Table for PDF Macros */}
+          <div style={{ width: '100%', maxWidth: '650px', padding: '60px 0', borderTop: '1px solid #f3f4f6' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: 'none' }}>
+              <tbody>
+                <tr>
+                  <td style={{ textAlign: 'center', width: '25%' }}>
+                    <p style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.4em', color: '#9ca3af', marginBottom: '10px', margin: 0 }}>Energia</p>
+                    <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827', margin: 0 }}>{dietPlan?.calories} <span style={{ fontSize: '10px', fontWeight: 'normal', color: '#d1d5db' }}>kcal</span></p>
+                  </td>
+                  <td style={{ textAlign: 'center', width: '25%' }}>
+                    <p style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.4em', color: '#9ca3af', marginBottom: '10px', margin: 0 }}>Proteína</p>
+                    <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827', margin: 0 }}>{dietPlan?.macros.protein}g</p>
+                  </td>
+                  <td style={{ textAlign: 'center', width: '25%' }}>
+                    <p style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.4em', color: '#9ca3af', marginBottom: '10px', margin: 0 }}>Gorduras</p>
+                    <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827', margin: 0 }}>{dietPlan?.macros.fats}g</p>
+                  </td>
+                  <td style={{ textAlign: 'center', width: '25%' }}>
+                    <p style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.4em', color: '#9ca3af', marginBottom: '10px', margin: 0 }}>Carbos</p>
+                    <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827', margin: 0 }}>{dietPlan?.macros.carbs}g</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
+        {/* Black Bar Footer for PDF */}
+        <div style={{ backgroundColor: '#111827', width: '210mm', padding: '15px 0', position: 'absolute', bottom: 0, left: 0 }}>
+          <p style={{ fontSize: '9px', color: 'white', textTransform: 'uppercase', fontWeight: 'bold', textAlign: 'center', margin: 0, letterSpacing: '0.1em' }}>
+            Julimar Meneses • Nutricionista • @dr.julimar.meneses
+          </p>
+          <p style={{ fontSize: '7px', color: 'white', textAlign: 'center', marginTop: '4px', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.8 }}>
+            Protocolo de Nutrição Ancestral • Dieta da Selva
+          </p>
+        </div>
+
         {/* Page break after cover in print */}
-        <div className="print:break-after-page" />
+        <div style={{ pageBreakAfter: 'always', breakAfter: 'page' }} />
       </header>
 
       {/* PDF Download Button - Fixed */}
       <button
         onClick={handleDownload}
-        className="fixed bottom-6 right-6 z-50 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full px-8 h-16 shadow-none flex items-center gap-3 transition-all hover:scale-105 active:scale-95 group print:hidden"
+        className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 z-50 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl md:rounded-full px-6 md:px-8 h-14 md:h-16 shadow-lg flex items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 group print:hidden"
       >
-        <Download className="w-6 h-6 group-hover:animate-bounce" />
-        <span className="font-bold text-lg uppercase tracking-wider">Baixar Protocolo PDF</span>
+        <Download className="w-5 h-5 md:w-6 md:h-6 group-hover:animate-bounce" />
+        <span className="font-bold text-xs md:text-base uppercase tracking-wider">Baixar Protocolo PDF</span>
       </button>
 
       {/* Tabs Navigation - Premium Segmented Control */}
@@ -520,12 +583,13 @@ export function Ebook() {
                   display: flex !important;
                   align-items: center !important;
                   justify-content: center !important;
-                  background-color: #064e3b !important;
+                  background-color: white !important;
                   -webkit-print-color-adjust: exact !important;
                   print-color-adjust: exact !important;
                 }
                 header * {
-                  color: white !important;
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
                 }
                 header h1, header div, header p, header h2 {
                   -webkit-print-color-adjust: exact !important;
@@ -559,20 +623,17 @@ export function Ebook() {
                 }
 
                 header .max-w-4xl {
-                   padding: 0 !important;
-                   margin: 0 !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    width: 100% !important;
+                    max-width: none !important;
+                    display: block !important;
+                 }
+                 
+                 header .max-w-4xl > div {
+                   padding: 20px !important;
                    width: 100% !important;
-                   max-width: none !important;
-                   display: flex !important;
-                   flex-direction: column !important;
-                   justify-content: center !important;
-                   align-items: center !important;
-                }
-                
-                header .max-w-4xl > div {
-                  padding: 40px !important;
-                  width: 100% !important;
-                }
+                 }
                 
                 section, .rounded-xl {
                   break-inside: avoid !important;
@@ -1806,23 +1867,21 @@ export function Ebook() {
             </div>
           </div>
 
-          {/* Footer */}
-          <footer className="mt-12 bg-emerald-800 text-white py-8 px-4 rounded-xl pdf-footer">
-            <div className="text-center">
-              <div className="mb-4 flex justify-center">
-                <img
-                  src="/592accf5-9d8e-4ea0-bfbd-7ad00ed283b8.png"
-                  alt="Logo"
-                  className="w-28 h-auto brightness-0 invert"
-                />
-              </div>
-              <h2 className="text-xl font-normal mb-1 opacity-50 tracking-widest">DIETA DA SELVA</h2>
-              <p className="text-[10px] opacity-40 mb-4 font-normal">
+          {/* Footer - Glued to the bottom */}
+          <footer className="mt-20 bg-[#064e3b] text-white py-12 px-6 rounded-t-[40px] shadow-2xl relative z-10 -mx-4 sm:-mx-8 md:-mx-12">
+            <div className="text-center max-w-2xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-medium mb-2 tracking-[0.2em] uppercase">DIETA DA SELVA</h2>
+              <p className="text-xs md:text-sm text-emerald-100/60 mb-8 font-light uppercase tracking-widest">
                 Protocolo de {userData?.goal === "muscle-gain" ? "Ganho de Peso" : userData?.goal === "lose-weight" ? "Queima de Gordura" : "Saúde e Vigor"} Saudável
               </p>
-              <p className="text-[9px] opacity-30 font-normal">Alimentação Ancestral para Resultados Modernos</p>
-              <p className="mt-4 text-[11px] font-normal opacity-40">Desenvolvido por Julimar Meneses - Nutricionista | @dr.julimar.meneses</p>
-              <p className="text-[8px] opacity-20 mt-2 font-normal">© 2026 - Todos os direitos reservados</p>
+              
+              <div className="w-12 h-px bg-emerald-500/30 mx-auto mb-8" />
+              
+              <p className="text-[10px] md:text-xs text-white/40 mb-2 font-light uppercase tracking-[0.3em]">Alimentação Ancestral para Resultados Modernos</p>
+              <p className="text-xs text-white/60 font-medium">
+                Desenvolvido por Julimar Meneses - Nutricionista <span className="mx-2 text-white/20">|</span> @dr.julimar.meneses
+              </p>
+              <p className="text-[9px] text-white/20 mt-6 font-light uppercase tracking-widest">© 2026 - Todos os direitos reservados</p>
             </div>
           </footer>
         </div>
