@@ -19,12 +19,5 @@ export default function Page() {
       </div>
   }
 
-  return (
-    <>
-      {!isAuthenticated && (
-        <LoginModal onLoginSuccess={() => setIsAuthenticated(true)} />
-      )}
-      {isAuthenticated && <Ebook />}
-    </>
-  )
+  return <Ebook />
 }
