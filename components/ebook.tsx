@@ -1039,9 +1039,9 @@ export function Ebook() {
                           "1 Banana-prata"
                         ]}
                         macros={{ 
-                          protein: Math.round(dietPlan?.macros.protein! * 0.25), 
-                          fat: Math.round(dietPlan?.macros.fats! * 0.20), 
-                          carbs: Math.round(dietPlan?.macros.carbs! * 0.15) 
+                          protein: userData?.goal === "lose-weight" ? 44 : Math.round(dietPlan?.macros.protein! * 0.25), 
+                          fat: userData?.goal === "lose-weight" ? 18 : Math.round(dietPlan?.macros.fats! * 0.20), 
+                          carbs: userData?.goal === "lose-weight" ? 24 : Math.round(dietPlan?.macros.carbs! * 0.15) 
                         }}
                       />
 
