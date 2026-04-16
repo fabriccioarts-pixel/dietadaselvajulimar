@@ -1024,12 +1024,12 @@ export function Ebook() {
                       <DayMeal
                         time="07:00"
                         name="Café da Manhã (Base Ancestral)"
-                        calories={Math.round(dietPlan?.calories! * 0.20)}
+                        calories={userData?.goal === "lose-weight" ? 450 : Math.round(dietPlan?.calories! * 0.20)}
                         items={userData?.goal === "lose-weight" ? [
-                          `${Math.round(userData?.weight! * 0.05)} Ovos (sendo 2 inteiros + demais apenas claras)`,
-                          "120g de Peito de Frango desfiado (Proteína Limpa)",
-                          "30g de Abacate ou 1 colher de sopa de Azeite",
-                          "100g de Mandioca ou Batata-doce",
+                          "4 Ovos (2 inteiros + 2 claras)",
+                          "80g de Peito de Frango desfiado",
+                          "30g de Abacate ou Azeite",
+                          "80g de Mandioca ou Batata-doce",
                           "Café preto sem açúcar"
                         ] : [
                           `${Math.round(userData?.weight! * (userData?.goal === "muscle-gain" ? 0.08 : 0.065))} Ovos inteiros (cozidos ou mexidos)`,
@@ -1067,7 +1067,7 @@ export function Ebook() {
                       <DayMeal
                         time="13:00"
                         name="Almoço (Força da Selva)"
-                        calories={Math.round(dietPlan?.calories! * 0.25)}
+                        calories={userData?.goal === "lose-weight" ? 550 : Math.round(dietPlan?.calories! * 0.25)}
                         items={userData?.goal === "lose-weight" ? [
                           "200g-250g de Peito de Frango ou Peixe Branco grelhado",
                           "120g de Mandioca ou Batata-doce",
