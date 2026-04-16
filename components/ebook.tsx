@@ -995,9 +995,9 @@ export function Ebook() {
                         name="Café da Manhã (Base Ancestral)"
                         calories={Math.round(dietPlan?.calories! * 0.20)}
                         items={[
-                          `${Math.round(userData?.weight! * 0.07)} Ovos inteiros (mexidos na manteiga ou banha)`,
-                          "1 Abacate médio (150-200g)",
-                          "1 porção de Batata-doce ou Inhame (150g)",
+                          `${Math.round(userData?.weight! * (userData?.goal === "muscle-gain" ? 0.08 : (userData?.goal === "lose-weight" ? 0.05 : 0.065)))} Ovos inteiros (mexidos na manteiga ou banha)`,
+                          userData?.goal === "lose-weight" ? "1/2 Abacate médio (80-100g)" : "1 Abacate médio (150-200g)",
+                          `${Math.round(150 * (userData?.goal === "muscle-gain" ? 1.5 : (userData?.goal === "lose-weight" ? 0.6 : 1)))}g de Batata-doce ou Inhame`,
                           "1 Banana-prata grande"
                         ]}
                         macros={{ 
@@ -1028,10 +1028,10 @@ export function Ebook() {
                         name="Almoço (Força da Selva)"
                         calories={Math.round(dietPlan?.calories! * 0.25)}
                         items={[
-                          "200g-250g de Carne Bovina (Acém, Fraldinha ou Músculo)",
-                          "250g-300g de Mandioca ou Batata-inglesa",
-                          "Salada de Cenoura e Beterraba com Azeite extra-virgem (2 col. sopa)",
-                          "Sobremesa: 1 Manga ou 1 fatia grande de Mamão"
+                          `${Math.round(200 * (userData?.goal === "muscle-gain" ? 1.3 : (userData?.goal === "lose-weight" ? 0.8 : 1)))}-${Math.round(250 * (userData?.goal === "muscle-gain" ? 1.3 : (userData?.goal === "lose-weight" ? 0.8 : 1)))}g de Carne Bovina (Acém, Fraldinha ou Músculo)`,
+                          `${Math.round(250 * (userData?.goal === "muscle-gain" ? 1.6 : (userData?.goal === "lose-weight" ? 0.5 : 1)))}-${Math.round(300 * (userData?.goal === "muscle-gain" ? 1.6 : (userData?.goal === "lose-weight" ? 0.5 : 1)))}g de Mandioca ou Batata-inglesa`,
+                          userData?.goal === "lose-weight" ? "Salada abundante de folhas e legumes" : "Salada de Cenoura e Beterraba com Azeite (2 col. sopa)",
+                          "Sobremesa: 1 Fruta da estação (Manga ou Mamão)"
                         ]}
                         macros={{ 
                           protein: Math.round(dietPlan?.macros.protein! * 0.30), 
@@ -1060,10 +1060,10 @@ export function Ebook() {
                         name="Jantar (Recuperação)"
                         calories={Math.round(dietPlan?.calories! * 0.20)}
                         items={[
-                          "200g de Coxa/Sobrecoxa de Frango com pele ou Peixe gordo",
-                          "2 Bananas-da-terra assadas ou grelhadas",
-                          "Legumes variados (cozidos na manteiga)",
-                          "1 fatia de Abacaxi de sobremesa"
+                          `${Math.round(200 * (userData?.goal === "muscle-gain" ? 1.2 : (userData?.goal === "lose-weight" ? 0.85 : 1)))}g de Coxa/Sobrecoxa de Frango com pele ou Peixe gordo`,
+                          userData?.goal === "lose-weight" ? "1 Banana-da-terra" : (userData?.goal === "muscle-gain" ? "3 Bananas-da-terra" : "2 Bananas-da-terra"),
+                          "Legumes variados (cozidos na manteiga ou banha)",
+                          "1 fatia de Abacaxi (digestivo natural)"
                         ]}
                         macros={{ 
                           protein: Math.round(dietPlan?.macros.protein! * 0.25), 
@@ -1077,8 +1077,8 @@ export function Ebook() {
                         name="Lanche da Noite (Ceia Ancestral)"
                         calories={Math.round(dietPlan?.calories! * 0.10)}
                         items={[
-                          "2 Ovos cozidos ou 50g de Coco seco",
-                          "1 Banana com Mel e Canela",
+                          userData?.goal === "lose-weight" ? "1 Ovo cozido ou 30g de Coco seco" : "2 Ovos cozidos ou 50g de Coco seco",
+                          userData?.goal === "lose-weight" ? "1/2 Banana com Canela" : "1 Banana com Mel e Canela",
                           "Chá de Camomila ou Erva-doce (sem açúcar)"
                         ]}
                         macros={{ 
