@@ -1027,15 +1027,16 @@ export function Ebook() {
                         calories={userData?.goal === "lose-weight" ? 450 : Math.round(dietPlan?.calories! * 0.20)}
                         items={userData?.goal === "lose-weight" ? [
                           "4 Ovos (2 inteiros + 2 claras)",
-                          "80g de Peito de Frango desfiado",
-                          "30g de Abacate ou Azeite",
-                          "80g de Mandioca ou Batata-doce",
-                          "Café preto sem açúcar"
+                          "80g de Peito de Frango",
+                          "30g de Abacate",
+                          "80g de Mandioca",
+                          "Café sem açúcar"
                         ] : [
-                          `${Math.round(userData?.weight! * (userData?.goal === "muscle-gain" ? 0.08 : 0.065))} Ovos inteiros (cozidos ou mexidos)`,
-                          "100g de Carne Seca desfiada ou Frango",
-                          "60g de Abacate",
-                          `${Math.round(150 * (userData?.goal === "muscle-gain" ? 1.2 : 1))}g de Raízes (Batata-doce/Inhame)`,
+                          "6 Ovos inteiros (cozidos/mexidos)",
+                          "100g de Carne Moída (Músculo/Patinho)",
+                          "60g de Abacate (Fonte de Gordura Boa)",
+                          "150g de Mandioca ou Batata-doce",
+                          "1 Banana-prata"
                         ]}
                         macros={{ 
                           protein: Math.round(dietPlan?.macros.protein! * 0.25), 
@@ -1069,15 +1070,15 @@ export function Ebook() {
                         name="Almoço (Força da Selva)"
                         calories={userData?.goal === "lose-weight" ? 550 : Math.round(dietPlan?.calories! * 0.25)}
                         items={userData?.goal === "lose-weight" ? [
-                          "200g-250g de Peito de Frango ou Peixe Branco grelhado",
-                          "120g de Mandioca ou Batata-doce",
-                          "Prato fundo de Salada de Folhas + Brócolis/Couve-flor ao vapor",
-                          "1 fatia de Abacaxi (enzimas digestivas)"
+                          "200g de Peito de Frango",
+                          "100g de Mandioca",
+                          "Salada abundante de folhas e brócolis",
+                          "1 fatia de Abacaxi"
                         ] : [
-                          `${Math.round(250 * (userData?.goal === "muscle-gain" ? 1.2 : 1))}g de Carne Bovina Magra (Patinho/Alcatra)`,
-                          `${Math.round(200 * (userData?.goal === "muscle-gain" ? 1.5 : 0.8))}g de Mandioca ou Batata-doce`,
-                          "Salada de folhas verdes à vontade (sem óleos extras)",
-                          "1 fatia de Abacaxi ou 1 Laranja"
+                          "250g de Carne Bovina (Músculo/Patinho)",
+                          "250g de Mandioca",
+                          "Salada de Cenoura e Beterraba",
+                          "1 Laranja ou Abacaxi"
                         ]}
                         macros={{ 
                           protein: Math.round(dietPlan?.macros.protein! * 0.30), 
