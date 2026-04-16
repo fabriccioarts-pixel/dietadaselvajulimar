@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
+import SplitText from "./ui/split-text"
 import { ChevronDown, ChevronUp, BookOpen, Download, Loader2, Play, Check } from "lucide-react"
 import { jsPDF } from "jspdf"
 import html2canvas from "html2canvas"
@@ -325,9 +326,18 @@ export function Ebook() {
                 </div>
               </motion.div>
 
-              <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight uppercase">
-                Protocolo Pronto!
-              </h2>
+              <div className="mb-4">
+                <SplitText
+                  text="Protocolo Pronto!"
+                  className="text-4xl md:text-6xl font-black text-gradient premium-glow tracking-tight uppercase"
+                  delay={50}
+                  duration={1.5}
+                  ease="power3.out"
+                  from={{ opacity: 0, y: 30 }}
+                  to={{ opacity: 1, y: 0 }}
+                  tag="h2"
+                />
+              </div>
               <p className="text-gray-500 text-lg md:text-xl max-w-xl mx-auto mb-10">
                 Analisamos seus dados e geramos suas diretrizes ancestrais personalizadas.
               </p>
@@ -423,9 +433,30 @@ export function Ebook() {
             <p className="text-emerald-400 font-bold tracking-[0.5em] text-xs uppercase">
               Nutrição Ancestral Personalizada
             </p>
-            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-white !leading-none uppercase shadow-emerald-500/20">
-              DIETA DA <span className="text-emerald-500">SELVA</span>
-            </h1>
+            <div className="text-center font-black tracking-tighter !leading-none uppercase shadow-emerald-500/20">
+            <SplitText
+              text="DIETA DA"
+              className="text-5xl md:text-8xl text-white inline-block mr-4"
+              delay={50}
+              duration={1.5}
+              ease="power3.out"
+              splitType="words"
+              from={{ opacity: 0, y: 30 }}
+              to={{ opacity: 1, y: 0 }}
+              tag="span"
+            />
+            <SplitText
+              text="SELVA"
+              className="text-5xl md:text-8xl text-emerald-500 inline-block"
+              delay={80}
+              duration={1.5}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, scale: 0.5, rotationY: 90 }}
+              to={{ opacity: 1, scale: 1, rotationY: 0 }}
+              tag="span"
+            />
+            </div>
           </div>
 
           <div className="w-24 h-1.5 bg-emerald-500 rounded-full mb-12 shadow-lg shadow-emerald-500/50" />
