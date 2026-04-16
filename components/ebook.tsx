@@ -1025,11 +1025,17 @@ export function Ebook() {
                         time="07:00"
                         name="Café da Manhã (Base Ancestral)"
                         calories={Math.round(dietPlan?.calories! * 0.20)}
-                        items={[
-                          `${Math.round(userData?.weight! * (userData?.goal === "muscle-gain" ? 0.08 : 0.06))} Ovos inteiros (cozidos ou mexidos)`,
-                          "100g de Carne Seca desfiada ou Frango (para bater proteína)",
-                          userData?.goal === "lose-weight" ? "30g de Abacate (porção controlada)" : "60g de Abacate",
-                          `${Math.round(150 * (userData?.goal === "muscle-gain" ? 1.2 : 0.7))}g de Raízes (Batata-doce/Inhame)`,
+                        items={userData?.goal === "lose-weight" ? [
+                          `${Math.round(userData?.weight! * 0.05)} Ovos (sendo 2 inteiros + demais apenas claras)`,
+                          "120g de Peito de Frango desfiado (Proteína Limpa)",
+                          "30g de Abacate ou 1 colher de sopa de Azeite",
+                          "100g de Mandioca ou Batata-doce",
+                          "Café preto sem açúcar"
+                        ] : [
+                          `${Math.round(userData?.weight! * (userData?.goal === "muscle-gain" ? 0.08 : 0.065))} Ovos inteiros (cozidos ou mexidos)`,
+                          "100g de Carne Seca desfiada ou Frango",
+                          "60g de Abacate",
+                          `${Math.round(150 * (userData?.goal === "muscle-gain" ? 1.2 : 1))}g de Raízes (Batata-doce/Inhame)`,
                         ]}
                         macros={{ 
                           protein: Math.round(dietPlan?.macros.protein! * 0.25), 
@@ -1042,7 +1048,11 @@ export function Ebook() {
                         time="10:00"
                         name="Colação (Lanche Matinal)"
                         calories={Math.round(dietPlan?.calories! * 0.10)}
-                        items={[
+                        items={userData?.goal === "lose-weight" ? [
+                          "3 Ovos cozidos (apenas claras)",
+                          "1 Maçã ou 1 Pera",
+                          "1 Castanha-do-pará (selênio e gordura boa limitada)"
+                        ] : [
                           "30g de Coco seco ralado (sem açúcar)",
                           "1 porção de Frutas cítricas ou Uvas",
                           "1 punhado de Castanhas-do-pará (2-3 unidades)"
@@ -1058,11 +1068,16 @@ export function Ebook() {
                         time="13:00"
                         name="Almoço (Força da Selva)"
                         calories={Math.round(dietPlan?.calories! * 0.25)}
-                        items={[
+                        items={userData?.goal === "lose-weight" ? [
+                          "200g-250g de Peito de Frango ou Peixe Branco grelhado",
+                          "120g de Mandioca ou Batata-doce",
+                          "Prato fundo de Salada de Folhas + Brócolis/Couve-flor ao vapor",
+                          "1 fatia de Abacaxi (enzimas digestivas)"
+                        ] : [
                           `${Math.round(250 * (userData?.goal === "muscle-gain" ? 1.2 : 1))}g de Carne Bovina Magra (Patinho/Alcatra)`,
                           `${Math.round(200 * (userData?.goal === "muscle-gain" ? 1.5 : 0.8))}g de Mandioca ou Batata-doce`,
                           "Salada de folhas verdes à vontade (sem óleos extras)",
-                          "1 fatia de Abacaxi ou 1 Laranja (melhora absorção de ferro)"
+                          "1 fatia de Abacaxi ou 1 Laranja"
                         ]}
                         macros={{ 
                           protein: Math.round(dietPlan?.macros.protein! * 0.30), 
@@ -1090,9 +1105,14 @@ export function Ebook() {
                         time="19:30"
                         name="Jantar (Recuperação)"
                         calories={Math.round(dietPlan?.calories! * 0.20)}
-                        items={[
-                          `${Math.round(200 * (userData?.goal === "muscle-gain" ? 1.2 : (userData?.goal === "lose-weight" ? 0.85 : 1)))}g de Coxa/Sobrecoxa de Frango com pele ou Peixe gordo`,
-                          userData?.goal === "lose-weight" ? "1 Banana-da-terra" : (userData?.goal === "muscle-gain" ? "3 Bananas-da-terra" : "2 Bananas-da-terra"),
+                        items={userData?.goal === "lose-weight" ? [
+                          "180g de Filé de Tilápia ou Peito de Frango",
+                          "Mix de vegetais refogados (Cenoura, Chuchu, Abobrinha)",
+                          "Salada de Alface e Pepino à vontade",
+                          "Sobremesa: 1 fatia de Melancia (alta hidratação)"
+                        ] : [
+                          `${Math.round(200 * (userData?.goal === "muscle-gain" ? 1.2 : 1))}g de Coxa/Sobrecoxa de Frango ou Peixe Gordo`,
+                          `${userData?.goal === "muscle-gain" ? "3 Bananas-da-terra" : "2 Bananas-da-terra"}`,
                           "Legumes variados (cozidos na manteiga ou banha)",
                           "1 fatia de Abacaxi (digestivo natural)"
                         ]}
